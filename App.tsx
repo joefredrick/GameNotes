@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import DataPage from './src/Pages/DataPage';
 import Home from './src/Pages/Home';
+import LoginPage from './src/Pages/LoginPage';
 import { RootStackParamList } from './src/types';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -13,13 +14,14 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function App(): JSX.Element {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Home' screenOptions={{
+      <Stack.Navigator initialRouteName='Login' screenOptions={{
         animation: 'slide_from_right',
         headerStyle: { backgroundColor: 'blue' },
         headerTitleStyle: { color: 'white' },
       }}>
         <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
         <Stack.Screen name="Data" component={DataPage} />
+        <Stack.Screen name="Login" component={LoginPage} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -31,9 +33,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
   },
-  textstyle: {
-    fontSize: 30
-  }
 });
 
 export default App;
