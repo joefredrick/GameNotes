@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, Dimensions, TextInput, TouchableOpacity } from "react-native";
+import { Dimensions, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { NaviRouteScreenNavigationProps } from '../types';
 
 const HEIGHT = Dimensions.get('window').height;
@@ -8,27 +8,23 @@ const WIDTH = Dimensions.get('window').width;
 type Props = {
     navigation: NaviRouteScreenNavigationProps<'Home'>;
 }
-const LoginPageSection = (props: Props) => {
+
+const SignUpPageSection = (props: Props) => {
     return (
         <View style={styles.container}>
             <View style={styles.backdropContainer}>
                 <View style={styles.bigBackDrop}></View>
                 <View style={styles.smallBackDrop}></View>
             </View>
-            <Text style={styles.loginText}>Login</Text>
-            <View style={styles.loginSection}>
-                <View style={styles.loginCard}>
+            <Text style={styles.signupText}>Signup</Text>
+            <View style={styles.signupSection}>
+                <View style={styles.signupCard}>
                     <TextInput style={styles.input} placeholder={'Username'} />
+                    <TextInput style={styles.input} placeholder={'Email'} />
                     <TextInput style={styles.input} placeholder={'Password'} />
                     <TouchableOpacity style={styles.submitButton} onPress={() => props.navigation.navigate('Home')}>
-                        <Text style={styles.submitText}>Login</Text>
+                        <Text style={styles.submitText} onPress={() => props.navigation.navigate('Login')}>Signup</Text>
                     </TouchableOpacity>
-                    <View style={styles.signupSection}>
-                        <Text style={styles.newbieText}>Newbie?</Text>
-                        <TouchableOpacity>
-                            <Text style={styles.signupText} onPress={() => props.navigation.navigate('Signup')}>Signup</Text>
-                        </TouchableOpacity>
-                    </View>
                 </View>
             </View>
             <View style={styles.bottomBackdropContainer}>
@@ -62,20 +58,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#8db5ddd7',
         borderRadius: 100,
     },
-    loginSection: {
-        height: HEIGHT/2.1,
-        width: WIDTH,
-        display: 'flex',
-        alignItems: 'center',
-    },
-    loginText: {
+    signupText: {
         display: 'flex',
         flexDirection: 'row',
         alignSelf: 'center',
         fontSize: 25,
         fontWeight: 'bold',
     },
-    loginCard: {
+    signupSection: {
+        height: HEIGHT/2.1,
+        width: WIDTH,
+        display: 'flex',
+        alignItems: 'center',
+    },
+    signupCard: {
         display: 'flex',
         marginTop: 10,
         alignItems: 'center',
@@ -110,23 +106,6 @@ const styles = StyleSheet.create({
         color: '#f4f4f9',
         fontWeight: 'bold',
     },
-    signupSection: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginTop: 20,
-    },
-    newbieText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#f4f4f9',
-    },
-    signupText: {
-        fontSize: 16,
-        textDecorationLine: 'underline',
-        color: '#3265C8',
-        marginLeft: 5,
-        fontWeight: 'bold',
-    },
     bottomBackdropContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -147,4 +126,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LoginPageSection;
+export default SignUpPageSection;

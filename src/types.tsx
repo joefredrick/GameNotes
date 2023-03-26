@@ -11,6 +11,7 @@ export type RootStackParamList = {
     Home: undefined;
     Data: undefined;
     Login: undefined;
+    Signup: undefined;
   };
 
 export type NaviRouteScreenNavigationProps<
