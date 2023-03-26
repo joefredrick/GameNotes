@@ -4,10 +4,10 @@ import { View, Text, StyleSheet, Image, Button, TouchableOpacity } from "react-n
 const FreeGamePlatformItem = (props: any) => {
     return (
         <View style={styles.container}>
-            <Image source={props.item.img} resizeMode={'contain'} style={styles.image}/>
+            <Image source={props.item.itemData.img} resizeMode={'contain'} style={styles.image}/>
             <View style={styles.footer}>
-                <TouchableOpacity style={styles.btn}>
-                    <Text style={styles.btnTxt}>Go to {props.item.name} site</Text>
+                <TouchableOpacity style={styles.btn} onPress={() => {props.item.prop.navigate('FreeGame')}}>
+                    <Text style={styles.btnTxt}>Go to {props.item.itemData.name} site</Text>
                 </TouchableOpacity>
             </View>
         </View>

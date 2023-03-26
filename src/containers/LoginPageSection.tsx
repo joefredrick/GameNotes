@@ -20,7 +20,7 @@ const LoginPageSection = (props: Props) => {
                 <View style={styles.loginCard}>
                     <TextInput style={styles.input} placeholder={'Username'} />
                     <TextInput style={styles.input} placeholder={'Password'} />
-                    <TouchableOpacity style={styles.submitButton} onPress={() => props.navigation.navigate('Home')}>
+                    <TouchableOpacity style={styles.submitButton} onPress={() => props.navigation.navigate('TabScreen')}>
                         <Text style={styles.submitText}>Login</Text>
                     </TouchableOpacity>
                     <View style={styles.signupSection}>
@@ -42,6 +42,8 @@ const LoginPageSection = (props: Props) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#f4f4f9',
+        height: HEIGHT,
+        width: WIDTH,
     },
     backdropContainer: {
         flexDirection: 'row',

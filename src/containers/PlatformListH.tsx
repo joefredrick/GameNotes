@@ -36,12 +36,12 @@ const tempFreeGamePlatform = [
     }
 ]
 
-const PlatformListH = () => {
+const PlatformListH = (props: any) => {
     return(
         <>
             <Text style={styles.title}>Free Games List</Text>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                {tempFreeGamePlatform.map((item:any, index) =>{return(<FreeGamePlatformItem key={index} item={item}/>)})}
+                {tempFreeGamePlatform.map((item:any, index) =>{return(<FreeGamePlatformItem key={index} item={{itemData: item, prop: props.props }}/>)})}
             </ScrollView>
         </>
     )

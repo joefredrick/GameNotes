@@ -15,32 +15,23 @@ const HomeContainer = () => {
 }
 const styles = StyleSheet.create({
     img:{
-        height: HEIGHT/2.5,
-        width: WIDTH/1.18,    
+        height: HEIGHT/4,
+        width: WIDTH/1.9, 
     },
     container:{
         display:"flex",
-        height: HEIGHT/2,
+        height: HEIGHT/2.5,
         width: WIDTH,
         alignItems: "center",
         justifyContent:"center",
-        backgroundColor: '#a5e4f1',
-        borderBottomLeftRadius: 50,
-        borderBottomRightRadius: 50,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 5,
-        },
-        shadowOpacity: 0.8,
-        shadowRadius: 6.68,
-        elevation: 7,
+        // backgroundColor: '#c4e0fdda',
+        
     },
     name:{
-        color: "white",
-        fontFamily: "sans-serif-medium",
+        color: "#3265C8",
+        // fontFamily: "sans-serif-medium",
         fontSize: 28,
-        fontWeight: "bold"
+        fontWeight: "bold",
     }
 })
 

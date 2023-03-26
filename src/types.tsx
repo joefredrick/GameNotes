@@ -12,8 +12,16 @@ export type RootStackParamList = {
     Data: undefined;
     Login: undefined;
     Signup: undefined;
+    TabScreen: undefined;
+    FreeGame:undefined;
   };
 
 export type NaviRouteScreenNavigationProps<
   Screen extends keyof RootStackParamList,
 > = NativeStackNavigationProp<RootStackParamList , Screen>;
+
+export type TabParamList = {
+  Home: undefined,
+  Profile: undefined,
+  Data: undefined
+}

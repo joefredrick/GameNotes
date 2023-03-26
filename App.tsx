@@ -4,7 +4,9 @@ import React from 'react';
 import {
   StyleSheet,
 } from 'react-native';
+import BottomTabNavigation from './src/navigation/BottomTabNavigation';
 import DataPage from './src/Pages/DataPage';
+import FreeGamePage from './src/Pages/FreeGamePage';
 import Home from './src/Pages/Home';
 import LoginPage from './src/Pages/LoginPage';
 import SignUpPage from './src/Pages/SignUpPage';
@@ -17,13 +19,14 @@ function App(): JSX.Element {
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Login' screenOptions={{
         animation: 'slide_from_right',
-        headerStyle: { backgroundColor: 'blue' },
+        headerStyle: { backgroundColor: '#5EA2E5' },
         headerTitleStyle: { color: 'white' },
       }}>
+        <Stack.Screen name="TabScreen" component={BottomTabNavigation} options={{headerShown: false}} />
         <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
-        <Stack.Screen name="Data" component={DataPage} />
         <Stack.Screen name="Login" component={LoginPage} options={{headerShown: false}}/>
         <Stack.Screen name="Signup" component={SignUpPage} options={{headerShown: false}}/>
+        <Stack.Screen name="FreeGame" component={FreeGamePage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

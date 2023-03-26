@@ -1,15 +1,26 @@
 import React from "react";
-import { ScrollView, } from "react-native";
+import { StyleSheet, View, Dimensions} from "react-native";
 import HomeContainer from "../containers/HomeContainer";
 import PlatformListH from "../containers/PlatformListH";
 
-const Home = () => {
+const WIDTH = Dimensions.get("window").width;
+const HEIGHT = Dimensions.get("window").height;
+
+const Home = (props: any) => {
     return(
-        <ScrollView>
+        <View style={styles.container}>
             <HomeContainer />
-            <PlatformListH />
-        </ScrollView>
+            <PlatformListH props={props.navigation}/>
+        </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: "#d4e3ea",
+        height: HEIGHT,
+        width: WIDTH,
+    }
+})
 
 export default Home;
