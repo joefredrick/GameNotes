@@ -5,11 +5,9 @@ import Home from "../Pages/Home";
 import DataPage from "../Pages/DataPage";
 import ProfilePage from "../Pages/ProfilePage";
 import { TabParamList } from "../types";
-import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import HomeIcon from '../assets/home-fill.svg';
-import ASDF from '../assets/edit-profile.svg';
-import { SvgUri } from 'react-native-svg';
+import ProfileIcon from '../assets/profile-default.svg';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
@@ -21,7 +19,7 @@ const BottomTabNavigation = () => {
         <Tab.Navigator
         screenOptions={{
             tabBarStyle: { position: 'absolute' },
-            tabBarActiveBackgroundColor: '#5EA2E5',
+            tabBarActiveBackgroundColor: "#5EA2E5",
             tabBarActiveTintColor: 'white',
             tabBarLabelStyle:{
                 fontSize: 16
@@ -31,7 +29,7 @@ const BottomTabNavigation = () => {
                 name="Home" 
                 component={Home}
                 options={{
-                    tabBarIcon: ({color}) => <HomeIcon fill={'white'} />,
+                    tabBarIcon: ({color}) => <HomeIcon fill={color} />,
                 }} 
                 />
             <Tab.Screen name="Data" component={DataPage}
@@ -39,7 +37,11 @@ const BottomTabNavigation = () => {
                     tabBarIcon: ({color}) => <HomeIcon fill={color} />,
                 }} 
                 />
-            <Tab.Screen name="Profile" component={ProfilePage} />
+            <Tab.Screen name="Profile" component={ProfilePage} 
+                options={{
+                    tabBarIcon: ({color}) => <ProfileIcon fill={color} />,
+                }} 
+                />
         </Tab.Navigator>
     );
 }
