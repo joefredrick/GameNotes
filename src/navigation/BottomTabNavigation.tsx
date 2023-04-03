@@ -8,6 +8,7 @@ import { TabParamList } from "../types";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import HomeIcon from '../assets/home-fill.svg';
+import ASDF from '../assets/edit-profile.svg';
 import { SvgUri } from 'react-native-svg';
 
 const Tab = createBottomTabNavigator<TabParamList>();
@@ -30,15 +31,13 @@ const BottomTabNavigation = () => {
                 name="Home" 
                 component={Home}
                 options={{
-                    tabBarIcon: ({ color, size }) => (
-                        <Image source={HomeIcon}/>
-                    ),
-                }}
+                    tabBarIcon: ({color}) => <HomeIcon fill={'white'} />,
+                }} 
                 />
             <Tab.Screen name="Data" component={DataPage}
-                // options={{
-                //     tabBarIcon: ({color}) => <HomeIcon fill={color} />,
-                // }} 
+                options={{
+                    tabBarIcon: ({color}) => <HomeIcon fill={color} />,
+                }} 
                 />
             <Tab.Screen name="Profile" component={ProfilePage} />
         </Tab.Navigator>
