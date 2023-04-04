@@ -58,7 +58,7 @@ const FreeGamePageSection = (props: Props) => {
                                     </View>
                                     <View style={styles.cardContent}>
                                         <Text style={styles.gameTitle}>{item.title}</Text>
-                                        <Text style={{fontSize: 16,}}>{item.offerType}</Text>
+                                        <Text style={{fontSize: 16, color :"#808080"}}>{item.offerType}</Text>
                                         <Text style={{fontSize: 16, }}>Free Until - {endDate.toLocaleString()}</Text>
                                         <View style={{flexDirection: 'row', alignItems: 'center',}}>
                                             <View style={{height:30, width: 50, borderRadius:15,display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#8db5ddd7'}}>
@@ -121,11 +121,13 @@ const styles = StyleSheet.create({
         height: HEIGHT/2.7,
         width: WIDTH/1.11,
         margin: 10,
-        elevation: 5,
-        borderTopRightRadius: 20,
-        borderBottomLeftRadius: 20,
+        // elevation: 5,
+        borderTopRightRadius: 40,
+        borderBottomLeftRadius: 40,
         display: 'flex',
         flexDirection: 'row',
+        borderWidth: 1,
+
     },
     cardImage: {
         width: "50%",

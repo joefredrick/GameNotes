@@ -7,5 +7,12 @@ export default {
         tint: lightBlue,
         tabIconDefault: '#ccc',
         tabIconSelected: lightBlue,
+    },
+    dark: {
+        text: '#000',
+        background: 'transparent',
+        tint: lightBlue,
+        tabIconDefault: '#ccc',
+        tabIconSelected: lightBlue,
     }
 }
