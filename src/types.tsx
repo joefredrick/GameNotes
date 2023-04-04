@@ -9,7 +9,6 @@ declare global {
 
 export type RootStackParamList = {
     Home: undefined;
-    Data: undefined;
     Login: undefined;
     Signup: undefined;
     TabScreen: undefined;
@@ -23,5 +22,5 @@ export type NaviRouteScreenNavigationProps<
 export type TabParamList = {
   Home: undefined,
   Profile: undefined,
-  Data: undefined
+  FreeGames: undefined,
 }

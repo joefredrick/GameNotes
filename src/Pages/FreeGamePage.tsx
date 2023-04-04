@@ -1,11 +1,19 @@
 import React from "react";
-import { Text } from "react-native";
+import { View } from "react-native";
+import { NaviRouteScreenNavigationProps } from "../types";
+import FreeGamePageSection from "../containers/FreeGamePageSection";
 
-const FreeGamePage = () => {
+interface FreeGamePageProps {
+    navigation: NaviRouteScreenNavigationProps<'Home'>;
+}
+
+const FreeGamePage: React.FunctionComponent<FreeGamePageProps> = (
+    { navigation }
+) => {
     return(
-        <>
-            <Text>Free Game Page Screen</Text>
-        </>
+        <View>
+            <FreeGamePageSection navigation={navigation}></FreeGamePageSection>
+        </View>
     )
 }
 

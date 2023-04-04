@@ -2,12 +2,14 @@ import React from "react";
 import { Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from "../Pages/Home";
-import DataPage from "../Pages/DataPage";
 import ProfilePage from "../Pages/ProfilePage";
 import { TabParamList } from "../types";
 import useColorScheme from "../hooks/useColorScheme";
-import HomeIcon from '../assets/home-fill.svg';
-import ProfileIcon from '../assets/profile-default.svg';
+import HomeIcon from '../assets/home.svg';
+import GameIcon from '../assets/games.svg';
+import ProfileIcon from '../assets/user.svg';
+import Colors from "../constants/Colors";
+import FreeGamePage from "../Pages/FreeGamePage";
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
@@ -18,28 +20,36 @@ const BottomTabNavigation = () => {
     return (
         <Tab.Navigator
         screenOptions={{
-            tabBarStyle: { position: 'absolute' },
-            tabBarActiveBackgroundColor: "#5EA2E5",
-            tabBarActiveTintColor: 'white',
-            tabBarLabelStyle:{
-                fontSize: 16
-            },
+            tabBarActiveTintColor: Colors[colorScheme].tint,
+            tabBarLabelStyle: { fontSize: 10},
+            tabBarStyle: {
+                padding: 5,
+                height: 50, 
+                bottom: 10,
+                right: 10,
+                left: 10,
+                position: 'absolute',
+                borderRadius: 10,
+                backgroundColor: '#f4f4f9'}
         }}>
             <Tab.Screen 
                 name="Home" 
                 component={Home}
                 options={{
-                    tabBarIcon: ({color}) => <HomeIcon fill={color} />,
+                    headerStyle: {backgroundColor: '#f4f4f9'},
+                    tabBarIcon: ({color}) => <HomeIcon fill={color} height={25} width={25}/>,
                 }} 
                 />
-            <Tab.Screen name="Data" component={DataPage}
+            <Tab.Screen name="FreeGames" component={FreeGamePage}
                 options={{
-                    tabBarIcon: ({color}) => <HomeIcon fill={color} />,
+                    headerStyle: {backgroundColor: '#f4f4f9'},
+                    tabBarIcon: ({color}) => <GameIcon fill={color} height={30} width={30}/>,
                 }} 
                 />
             <Tab.Screen name="Profile" component={ProfilePage} 
                 options={{
-                    tabBarIcon: ({color}) => <ProfileIcon fill={color} />,
+                    headerStyle: {backgroundColor: '#f4f4f9'},
+                    tabBarIcon: ({color}) => <ProfileIcon fill={color} height={25} width={25}/>,
                 }} 
                 />
         </Tab.Navigator>

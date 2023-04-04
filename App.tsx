@@ -5,7 +5,6 @@ import {
   StyleSheet,
 } from 'react-native';
 import BottomTabNavigation from './src/navigation/BottomTabNavigation';
-import DataPage from './src/Pages/DataPage';
 import FreeGamePage from './src/Pages/FreeGamePage';
 import Home from './src/Pages/Home';
 import LoginPage from './src/Pages/LoginPage';
