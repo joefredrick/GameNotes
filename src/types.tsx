@@ -13,6 +13,7 @@ export type RootStackParamList = {
     Signup: undefined;
     TabScreen: undefined;
     FreeGame:undefined;
+    GameInfo: undefined,
   };
 
 export type NaviRouteScreenNavigationProps<
@@ -23,4 +24,5 @@ export type TabParamList = {
   Home: undefined,
   Profile: undefined,
   FreeGames: undefined,
+  GameInfo: undefined,
 }

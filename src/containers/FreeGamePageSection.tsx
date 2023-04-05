@@ -60,7 +60,7 @@ const FreeGamePageSection = (props: Props) => {
                 ].promotions.promotionalOffers[0].promotionalOffers[0].endDate,
               );
               return (
-                <TouchableOpacity key={index}>
+                <TouchableOpacity key={index} onPress={() => props.navigation.navigate('GameInfo')}>
                   <View style={styles.currentCard} key={index}>
                     <View style={styles.cardImage}>
                       <View

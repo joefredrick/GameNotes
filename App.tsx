@@ -10,6 +10,7 @@ import Home from './src/Pages/Home';
 import LoginPage from './src/Pages/LoginPage';
 import SignUpPage from './src/Pages/SignUpPage';
 import { RootStackParamList } from './src/types';
+import GameInfoPage from './src/Pages/GameInfoPage';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -26,6 +27,7 @@ function App(): JSX.Element {
         <Stack.Screen name="Login" component={LoginPage} options={{headerShown: false}}/>
         <Stack.Screen name="Signup" component={SignUpPage} options={{headerShown: false}}/>
         <Stack.Screen name="FreeGame" component={FreeGamePage} />
+        <Stack.Screen name="GameInfo" component={GameInfoPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
