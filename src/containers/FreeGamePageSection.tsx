@@ -1,158 +1,247 @@
-import React, { useEffect, useState } from "react";
-import { Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { NaviRouteScreenNavigationProps } from '../types';
+import React, {useEffect, useState} from 'react';
+import {
+  Dimensions,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {NaviRouteScreenNavigationProps} from '../types';
 
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
 
 type Props = {
-    navigation: NaviRouteScreenNavigationProps<'Home'>;
-}
+  navigation: NaviRouteScreenNavigationProps<'Home'>;
+};
 
 const FreeGamePageSection = (props: Props) => {
+  const [currentData, setCurrentData] = useState<any[]>([]);
+  const [upcomingData, setUpcomingData] = useState<any[]>([]);
 
-    const [currentData, setCurrentData] = useState<any[]>([]);
-    const [upcomingData, setUpcomingData] = useState<any[]>([]);
- 
-    const FetchData = () => {
-        const options = {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-        };
-        
-        fetch('https://gamenotes-b30b3-default-rtdb.firebaseio.com/freeGames/-NS9WAkpjOJdISnT5I-w/freeGames.json', options)
-            .then(response => response.json())
-            .then(response => {
-                setCurrentData(response.current)
-                setUpcomingData(response.upcoming)
-            })
-            .catch(err => console.error(err));
-    }
+  const FetchData = () => {
+    const options = {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    };
 
-    useEffect(() => {
-        FetchData();
-    }, [])
-    console.log('2023-04-06T15:00:00.000Z')
-    var date = new Date('2023-04-06T15:00:00.000Z');
-    console.log(date.toLocaleString());
-    // console.log(date.toLocaleDateString());
-    // console.log(date.toLocaleTimeString());
-    // console.log(currentData[0].promotions.promotionalOffers[0].promotionalOffers[0].endDate)
-    return (    
-        <View style={styles.container}>
-            <SafeAreaView>
-                <ScrollView style={styles.cards}>
-                    <Text style={styles.text}>Current Games</Text>
-                    {currentData && 
-                        currentData.map((item: any, index: any) => {
-                            let endDate = new Date(currentData[index].promotions.promotionalOffers[0].promotionalOffers[0].endDate)
-                            return (
-                                <View style={styles.currentCard} key={index}>
-                                    <View style={styles.cardImage}>
-                                        <View style={{height: "80%", width: "80%"}}>
-                                            <Image source={{uri: item.keyImages[1].url}} style={styles.imageStyle}/>
-                                        </View>
-                                    </View>
-                                    <View style={styles.cardContent}>
-                                        <Text style={styles.gameTitle}>{item.title}</Text>
-                                        <Text style={{fontSize: 16, color :"#808080"}}>{item.offerType}</Text>
-                                        <Text style={{fontSize: 16, }}>Free Until - {endDate.toLocaleString()}</Text>
-                                        <View style={{flexDirection: 'row', alignItems: 'center',}}>
-                                            <View style={{height:30, width: 50, borderRadius:15,display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#8db5ddd7'}}>
-                                                <Text>-100%</Text>
-                                            </View>
-                                            <Text style={{textDecorationLine: 'line-through', paddingLeft: 10,}}>{'\u20B9'} {item.price.totalPrice.discount}</Text>
-                                            <Text style={{ paddingLeft: 10,}}>{'\u20B9'} {item.price.totalPrice.discountPrice}</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                            )
-                        })
-                    }
-                    <Text style={styles.text}>Upcoming Games</Text>
-                    {upcomingData && 
-                        upcomingData.map((item: any, index: any) => {
-                            console.log(upcomingData[index].promotions.upcomingPromotionalOffers[0].promotionalOffers[0].endDate)
-                            let startDate = new Date(upcomingData[index].promotions.upcomingPromotionalOffers[0].promotionalOffers[0].startDate)
-                            let endDate = new Date(upcomingData[index].promotions.upcomingPromotionalOffers[0].promotionalOffers[0].endDate)
-                            return (
-                                <View style={styles.currentCard} key={index}>
-                                    <View style={styles.cardImage}>
-                                        <View style={{height: "80%", width: "80%"}}>
-                                            <Image source={{uri: item.keyImages[0].url}} style={styles.imageStyle}/>
-                                        </View>
-                                    </View>
-                                    <View style={styles.cardContent}>
-                                        <Text style={styles.gameTitle}>{item.title}</Text>
-                                        <Text>{item.offerType}</Text>
-                                        <Text>Claimable at</Text>
-                                        <Text>{startDate.toLocaleString()} - {endDate.toLocaleString()}</Text>
-                                    </View>
-                                </View>
-                            )
-                        })
-                    }
-                </ScrollView>
-            </SafeAreaView>
-        </View>
+    fetch(
+      'https://gamenotes-b30b3-default-rtdb.firebaseio.com/freeGames/-NS9WAkpjOJdISnT5I-w/freeGames.json',
+      options,
     )
-}
+      .then(response => response.json())
+      .then(response => {
+        setCurrentData(response.current);
+        setUpcomingData(response.upcoming);
+      })
+      .catch(err => console.error(err));
+  };
+
+  useEffect(() => {
+    FetchData();
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <SafeAreaView>
+        <ScrollView style={styles.cards}>
+          <Text style={styles.text}>Current Games</Text>
+          {currentData &&
+            currentData.map((item: any, index: any) => {
+              let endDate = new Date(
+                currentData[
+                  index
+                ].promotions.promotionalOffers[0].promotionalOffers[0].endDate,
+              );
+              return (
+                <TouchableOpacity key={index}>
+                  <View style={styles.currentCard} key={index}>
+                    <View style={styles.cardImage}>
+                      <View
+                        style={{
+                          height: '80%',
+                          width: '80%',
+                          borderBottomLeftRadius: 20,
+                          borderTopRightRadius: 20,
+                          backgroundColor: '#0078f2',
+                        }}>
+                        <Image
+                          source={{uri: item.keyImages[1].url}}
+                          style={styles.currentImageStyle}
+                        />
+                        <Text
+                          style={{
+                            display: 'flex',
+                            alignSelf: 'center',
+                            fontSize: 16,
+                            fontWeight: 'bold',
+                            color: 'white',
+                            paddingTop: 5,
+                          }}>
+                          FREE NOW
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={styles.cardContent}>
+                      <Text style={styles.gameTitle}>{item.title}</Text>
+                      <Text style={{fontSize: 16, color: '#808080'}}>
+                        {item.offerType}
+                      </Text>
+                      <Text style={{fontSize: 16, color: 'green'}}>
+                        {item.status}
+                      </Text>
+                      <Text style={{fontSize: 16, color: '#808080'}}>
+                        Free Until - {endDate.toLocaleString()}
+                      </Text>
+                      <View
+                        style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <View
+                          style={{
+                            height: 30,
+                            width: 50,
+                            borderRadius: 15,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: '#0078f2',
+                          }}>
+                          <Text style={{color: 'white'}}>-100%</Text>
+                        </View>
+                        <Text
+                          style={{
+                            textDecorationLine: 'line-through',
+                            paddingLeft: 10,
+                            color: '#808080',
+                          }}>
+                          {'\u20B9'} {item.price.totalPrice.discount}
+                        </Text>
+                        <Text style={{paddingLeft: 10, color: '#808080'}}>
+                          {'\u20B9'} {item.price.totalPrice.discountPrice}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
+          <Text style={styles.text}>Upcoming Games</Text>
+          {upcomingData &&
+            upcomingData.map((item: any, index: any) => {
+              console.log(
+                upcomingData[index].promotions.upcomingPromotionalOffers[0]
+                  .promotionalOffers[0].endDate,
+              );
+              let startDate = new Date(
+                upcomingData[
+                  index
+                ].promotions.upcomingPromotionalOffers[0].promotionalOffers[0].startDate,
+              );
+              let endDate = new Date(
+                upcomingData[
+                  index
+                ].promotions.upcomingPromotionalOffers[0].promotionalOffers[0].endDate,
+              );
+              return (
+                <View style={styles.currentCard} key={index}>
+                  <View style={styles.cardImage}>
+                    <View style={{height: '80%', width: '80%'}}>
+                      <Image
+                        source={{uri: item.keyImages[0].url}}
+                        style={styles.imageStyle}
+                      />
+                    </View>
+                  </View>
+                  <View style={styles.cardContent}>
+                    <Text style={styles.gameTitle}>{item.title}</Text>
+                    <Text style={{color: '#808080'}}>{item.offerType}</Text>
+                    <Text style={{color: '#808080'}}>Claimable at</Text>
+                    <Text style={{color: '#808080'}}>
+                      {startDate.toLocaleString()} - {endDate.toLocaleString()}
+                    </Text>
+                  </View>
+                </View>
+              );
+            })}
+        </ScrollView>
+      </SafeAreaView>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#f4f4f9',
-        height: HEIGHT/1.3,
-        width: WIDTH,
-        margin: 10,
-    },
-    text: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        color: 'black',
-    },
-    cards: {
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    currentCard: {
-        height: HEIGHT/2.7,
-        width: WIDTH/1.11,
-        margin: 10,
-        // elevation: 5,
-        borderTopRightRadius: 40,
-        borderBottomLeftRadius: 40,
-        display: 'flex',
-        flexDirection: 'row',
-        borderWidth: 1,
-
-    },
-    cardImage: {
-        width: "50%",
-        height: "100%",
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    imageStyle: {
-        height: "100%", 
-        width: "100%", 
-        borderBottomLeftRadius:20, 
-        borderTopRightRadius:20,
-    },
-    cardContent: {
-        width: "50%",
-        height: "100%",
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-evenly',
-    },
-    gameTitle: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        color: 'black',
-    },
+  container: {
+    backgroundColor: '#d4e3ea',
+    height: HEIGHT,
+    width: WIDTH,
+    margin: 10,
+    paddingBottom: 150,
+  },
+  text: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  cards: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  currentCard: {
+    height: HEIGHT / 2.7,
+    width: WIDTH / 1.11,
+    margin: 10,
+    elevation: 5,
+    borderTopRightRadius: 40,
+    borderBottomLeftRadius: 40,
+    display: 'flex',
+    flexDirection: 'row',
+    // borderWidth: 0.5,
+    backgroundColor: '#f4f4f9',
+  },
+  cardImage: {
+    width: '50%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  currentImageStyle: {
+    height: '85%',
+    width: '100%',
+    borderTopRightRadius: 20,
+  },
+  imageStyle: {
+    height: '100%',
+    width: '100%',
+    borderBottomLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  cardContent: {
+    width: '50%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+  },
+  gameTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  claimButton: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignItems: 'center',
+    height: 30,
+    width: 100,
+    backgroundColor: '#0078f2',
+    borderRadius: 20,
+  },
 });
 
 export default FreeGamePageSection;
