@@ -60,7 +60,7 @@ const FreeGamePageSection = (props: Props) => {
                 ].promotions.promotionalOffers[0].promotionalOffers[0].endDate,
               );
               return (
-                <TouchableOpacity key={index} onPress={() => props.navigation.navigate('GameInfo')}>
+                <TouchableOpacity key={index} onPress={() => props.navigation.navigate('GameInfo', {data: item})}>
                   <View style={styles.currentCard} key={index}>
                     <View style={styles.cardImage}>
                       <View
@@ -133,10 +133,6 @@ const FreeGamePageSection = (props: Props) => {
           <Text style={styles.text}>Upcoming Games</Text>
           {upcomingData &&
             upcomingData.map((item: any, index: any) => {
-              console.log(
-                upcomingData[index].promotions.upcomingPromotionalOffers[0]
-                  .promotionalOffers[0].endDate,
-              );
               let startDate = new Date(
                 upcomingData[
                   index

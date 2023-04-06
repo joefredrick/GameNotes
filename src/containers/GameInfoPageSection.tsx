@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from 'react-native';
 import {NaviRouteScreenNavigationProps} from '../types';
 
 type Props = {
     navigation: NaviRouteScreenNavigationProps<'Home'>;
+    data: any;
 };
 
 const GameInfoPageSection = (props: Props) => {
+    const GameInfo = props.data.data;
     return (
         <View>
-            <Text>asdf</Text>
+            <Text>{GameInfo.title}</Text>
         </View>
     )
 }

@@ -1,19 +1,17 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { NaviRouteScreenNavigationProps } from "../types";
-import FreeGamePageSection from "../containers/FreeGamePageSection";
 import GameInfoPageSection from "../containers/GameInfoPageSection";
 
 interface GameInfoPageProps {
     navigation: NaviRouteScreenNavigationProps<'Home'>;
+    route: any;
 }
 
-const GameInfoPage: React.FunctionComponent<GameInfoPageProps> = (
-    { navigation }
-) => {
+const GameInfoPage: React.FunctionComponent<GameInfoPageProps> = (props) => {
     return(
         <View style={styles.container}>
-            <GameInfoPageSection navigation={navigation}></GameInfoPageSection>
+            <GameInfoPageSection navigation={props.navigation} data={props.route.params}></GameInfoPageSection>
         </View>
     )
 }
