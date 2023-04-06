@@ -31,10 +31,9 @@ const SignUpPageSection = (props: Props) => {
           <TextInput style={styles.input} placeholder={'Password'} />
           <TouchableOpacity
             style={styles.submitButton}
-            onPress={() => props.navigation.navigate('Home')}>
+            onPress={() => props.navigation.navigate('Login')}>
             <Text
-              style={styles.submitText}
-              onPress={() => props.navigation.navigate('Login')}>
+              style={styles.submitText}>
               Signup
             </Text>
           </TouchableOpacity>

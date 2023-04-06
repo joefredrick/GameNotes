@@ -22,12 +22,15 @@ function App(): JSX.Element {
         headerStyle: { backgroundColor: '#5EA2E5' },
         headerTitleStyle: { color: 'white' },
       }}>
-        <Stack.Screen name="TabScreen" component={BottomTabNavigation} options={{headerShown: false}} />
-        <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
-        <Stack.Screen name="Login" component={LoginPage} options={{headerShown: false}}/>
-        <Stack.Screen name="Signup" component={SignUpPage} options={{headerShown: false}}/>
+        <Stack.Screen name="TabScreen" component={BottomTabNavigation} options={{ headerShown: false }} />
+        <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+        <Stack.Screen name="Login" component={LoginPage} options={{ headerShown: false }} />
+        <Stack.Screen name="Signup" component={SignUpPage} options={{ headerShown: false }} />
         <Stack.Screen name="FreeGame" component={FreeGamePage} />
-        <Stack.Screen name="GameInfo" component={GameInfoPage} />
+        <Stack.Screen name="GameInfo" component={GameInfoPage} options={{
+          headerStyle: { backgroundColor: '#f4f4f9' },
+          headerTitleStyle: { color: 'black' },
+        }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
