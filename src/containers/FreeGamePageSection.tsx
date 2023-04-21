@@ -32,7 +32,7 @@ const FreeGamePageSection = (props: Props) => {
     };
 
     fetch(
-      'https://gamenotes-b30b3-default-rtdb.firebaseio.com/EpicFree/-NSKUurm7f3aB8DEWU8n/freeGames.json',
+      'https://gamenotes-b30b3-default-rtdb.firebaseio.com/EpicGames/-NTXn02tkjEifiabTHI9/freeGames.json',
       options,
     )
       .then(response => response.json())
@@ -60,7 +60,7 @@ const FreeGamePageSection = (props: Props) => {
                 ].promotions.promotionalOffers[0].promotionalOffers[0].endDate,
               );
               return (
-                <TouchableOpacity key={index} onPress={() => props.navigation.navigate('GameInfo', {data: item})}>
+                <TouchableOpacity key={index} onPress={() => props.navigation.navigate('GameInfo', {data: item, endDate: endDate})}>
                   <View style={styles.currentCard} key={index}>
                     <View style={styles.cardImage}>
                       <View
@@ -93,11 +93,11 @@ const FreeGamePageSection = (props: Props) => {
                       <Text style={{fontSize: 16, color: '#808080'}}>
                         {item.offerType}
                       </Text>
-                      <Text style={{fontSize: 16, color: 'green'}}>
+                      <Text style={{fontSize: 16, color: 'green', fontWeight: 'bold'}}>
                         {item.status}
                       </Text>
                       <Text style={{fontSize: 16, color: '#808080'}}>
-                        Free Until - {endDate.toLocaleString()}
+                        Free Until - {endDate.toDateString()}
                       </Text>
                       <View
                         style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -144,24 +144,27 @@ const FreeGamePageSection = (props: Props) => {
                 ].promotions.upcomingPromotionalOffers[0].promotionalOffers[0].endDate,
               );
               return (
-                <View style={styles.currentCard} key={index}>
-                  <View style={styles.cardImage}>
-                    <View style={{height: '80%', width: '80%'}}>
-                      <Image
-                        source={{uri: item.keyImages[0].url}}
-                        style={styles.imageStyle}
-                      />
+                <TouchableOpacity key={index} onPress={() => props.navigation.navigate('GameInfo', {data: item, endDate:endDate})}>
+                  <View style={styles.currentCard} key={index}>
+                    <View style={styles.cardImage}>
+                      <View style={{height: '80%', width: '80%'}}>
+                        <Image
+                          source={{uri: item.keyImages[0].url}}
+                          style={styles.imageStyle}
+                        />
+                      </View>
+                    </View>
+                    <View style={styles.cardContent}>
+                      <Text style={styles.gameTitle}>{item.title}</Text>
+                      <Text style={{color: '#808080'}}>{item.offerType}</Text>
+                      <Text style={{fontSize: 16, color: 'red', fontWeight: 'bold'}}>{item.status}</Text>
+                      <Text style={{color: '#808080', fontWeight: 'bold', fontSize:16,}}>Comming Soon</Text>
+                      <Text style={{color: '#808080'}}>
+                        {startDate.toDateString()} - {endDate.toDateString()}
+                      </Text>
                     </View>
                   </View>
-                  <View style={styles.cardContent}>
-                    <Text style={styles.gameTitle}>{item.title}</Text>
-                    <Text style={{color: '#808080'}}>{item.offerType}</Text>
-                    <Text style={{color: '#808080'}}>Claimable at</Text>
-                    <Text style={{color: '#808080'}}>
-                      {startDate.toLocaleString()} - {endDate.toLocaleString()}
-                    </Text>
-                  </View>
-                </View>
+                </TouchableOpacity>
               );
             })}
         </ScrollView>

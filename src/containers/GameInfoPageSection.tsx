@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, Linking } from 'react-native';
 import {NaviRouteScreenNavigationProps} from '../types';
 
 const HEIGHT = Dimensions.get('window').height;
@@ -12,12 +12,14 @@ type Props = {
 
 const GameInfoPageSection = (props: Props) => {
     const GameInfo = props.data.data;
-    let endDate = new Date(
-        GameInfo.promotions.promotionalOffers[0].promotionalOffers[0].endDate,
-      );
+    // let endDate = new Date(
+    //     GameInfo.promotions.promotionalOffers[0].promotionalOffers[0].endDate,
+    //   );
     let releaseDate = new Date(
         GameInfo.effectiveDate
     );
+    const FinalEndDate = props.data.endDate;
+    console.log(FinalEndDate)
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
@@ -57,7 +59,7 @@ const GameInfoPageSection = (props: Props) => {
                     </Text>
                 </View>
                 <Text style={{fontSize: 16, color: 'black', alignSelf: 'center'}}>
-                    Sale Ends {endDate.toLocaleString()}
+                    Sale Ends {FinalEndDate.toLocaleString()}
                 </Text>
                 <View style={{flexDirection: 'row', margin:10, justifyContent:"space-between"}}>
                     <Text style={{fontSize: 16, color: '#808080'}}>Developer</Text>
@@ -73,7 +75,12 @@ const GameInfoPageSection = (props: Props) => {
                     <Text style={{fontSize: 16, color: '#808080'}}>Release Date</Text>
                     <Text style={{fontSize: 16, color: 'black'}}>{releaseDate.toLocaleDateString()}</Text>
                 </View>
-                <View style={{borderBottomWidth: 0.5, width: '100%',}}></View>
+                <View style={{borderBottomWidth: 0.5, width: '100%', marginBottom: 20}}></View>
+                <TouchableOpacity
+                style={styles.redeemButton}
+                onPress={() => {Linking.openURL(GameInfo.RedeemLink)}}>
+                <Text style={styles.redeemText}>Go To Page</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -132,6 +139,21 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         backgroundColor: 'black',
         marginBottom: 10,
+    },
+    redeemButton: {
+        height: 50,
+        width: 150,
+        backgroundColor: '#59BF40',
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignSelf: 'center',
+    },
+    redeemText: {
+        display: 'flex',
+        textAlign: 'center',
+        fontSize: 18,
+        color: '#f4f4f9',
+        fontWeight: 'bold',
     },
 });
 
