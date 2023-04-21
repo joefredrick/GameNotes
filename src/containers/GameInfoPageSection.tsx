@@ -188,6 +188,8 @@ const styles = StyleSheet.create({
     color: 'black',
     marginLeft: 10,
     marginBottom: 5,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   offerStyle: {
     fontSize: 12,
