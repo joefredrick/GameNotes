@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, Linking } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, Linking, ScrollView } from 'react-native';
 import {NaviRouteScreenNavigationProps} from '../types';
 
 const HEIGHT = Dimensions.get('window').height;
@@ -18,8 +18,9 @@ const GameInfoPageSection = (props: Props) => {
     let releaseDate = new Date(
         GameInfo.effectiveDate
     );
-    const FinalEndDate = props.data.endDate;
-    console.log(FinalEndDate)
+    console.log(props)
+    const FinalDate = props.data.gameDate;
+    let upcoming = props.data.upcoming;
     return (
         <View style={styles.container}>
             <View style={styles.imageContainer}>
@@ -32,7 +33,7 @@ const GameInfoPageSection = (props: Props) => {
                 <View style={styles.offerStyleBox}>
                     <Text style={styles.offerStyle}>{GameInfo.offerType}</Text>
                 </View>
-                <View
+                {upcoming? <></> :<View
                     style={{flexDirection: 'row', alignSelf: 'center', alignItems: 'center', marginBottom: 10,}}>
                     <View
                     style={{
@@ -57,10 +58,20 @@ const GameInfoPageSection = (props: Props) => {
                     <Text style={{paddingLeft: 10, color: 'black'}}>
                     {'\u20B9'} {GameInfo.price.totalPrice.discountPrice}
                     </Text>
-                </View>
-                <Text style={{fontSize: 16, color: 'black', alignSelf: 'center'}}>
-                    Sale Ends {FinalEndDate.toLocaleString()}
+                </View>}
+                {upcoming? 
+                <Text style={{fontSize: 16, color: 'black', alignSelf: 'center', marginBottom: 10}}>
+                    Sale Starts at {FinalDate.toLocaleString()}
                 </Text>
+                :<Text style={{fontSize: 16, color: 'black', alignSelf: 'center', marginBottom: 10}}>
+                    Sale Ends at {FinalDate.toLocaleString()}
+                </Text>}
+                <TouchableOpacity
+                style={styles.redeemButton}
+                onPress={() => {Linking.openURL(GameInfo.RedeemLink)}}>
+                <Text style={styles.redeemText}>Go To Page</Text>
+                </TouchableOpacity>
+                <ScrollView>
                 <View style={{flexDirection: 'row', margin:10, justifyContent:"space-between"}}>
                     <Text style={{fontSize: 16, color: '#808080'}}>Developer</Text>
                     <Text style={{fontSize: 16, color: 'black'}}>{GameInfo.customAttributes[1].value}</Text>
@@ -75,12 +86,12 @@ const GameInfoPageSection = (props: Props) => {
                     <Text style={{fontSize: 16, color: '#808080'}}>Release Date</Text>
                     <Text style={{fontSize: 16, color: 'black'}}>{releaseDate.toLocaleDateString()}</Text>
                 </View>
-                <View style={{borderBottomWidth: 0.5, width: '100%', marginBottom: 20}}></View>
-                <TouchableOpacity
-                style={styles.redeemButton}
-                onPress={() => {Linking.openURL(GameInfo.RedeemLink)}}>
-                <Text style={styles.redeemText}>Go To Page</Text>
-                </TouchableOpacity>
+                <View style={{borderBottomWidth: 0.5, width: '100%'}}></View>
+                <View style={{flexDirection: 'column', margin:10, justifyContent:"space-between"}}>
+                    <Text style={{fontSize: 16, color: '#808080'}}>Description</Text>
+                    <Text style={{fontSize: 16, color: 'black', padding: 5}}>{GameInfo.description}</Text>
+                </View>
+                </ScrollView>
             </View>
         </View>
     )
@@ -118,11 +129,11 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     title: {
-        fontSize: 24,
-        fontWeight: 'bold',
+        fontSize: 32,
         color: 'black',
         marginLeft: 10,
         marginBottom: 5,
+        // textAlign: "center"
     },
     offerStyle: {
         fontSize: 12,

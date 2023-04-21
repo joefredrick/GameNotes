@@ -60,7 +60,7 @@ const FreeGamePageSection = (props: Props) => {
                 ].promotions.promotionalOffers[0].promotionalOffers[0].endDate,
               );
               return (
-                <TouchableOpacity key={index} onPress={() => props.navigation.navigate('GameInfo', {data: item, endDate: endDate})}>
+                <TouchableOpacity key={index} onPress={() => props.navigation.navigate('GameInfo', {data: item, upcoming: false, gameDate: endDate})}>
                   <View style={styles.currentCard} key={index}>
                     <View style={styles.cardImage}>
                       <View
@@ -144,7 +144,7 @@ const FreeGamePageSection = (props: Props) => {
                 ].promotions.upcomingPromotionalOffers[0].promotionalOffers[0].endDate,
               );
               return (
-                <TouchableOpacity key={index} onPress={() => props.navigation.navigate('GameInfo', {data: item, endDate:endDate})}>
+                <TouchableOpacity key={index} onPress={() => props.navigation.navigate('GameInfo', {data: item, upcoming: true,  gameDate: startDate})}>
                   <View style={styles.currentCard} key={index}>
                     <View style={styles.cardImage}>
                       <View style={{height: '80%', width: '80%'}}>
@@ -158,7 +158,7 @@ const FreeGamePageSection = (props: Props) => {
                       <Text style={styles.gameTitle}>{item.title}</Text>
                       <Text style={{color: '#808080'}}>{item.offerType}</Text>
                       <Text style={{fontSize: 16, color: 'red', fontWeight: 'bold'}}>{item.status}</Text>
-                      <Text style={{color: '#808080', fontWeight: 'bold', fontSize:16,}}>Comming Soon</Text>
+                      <Text style={{color: '#808080', fontWeight: 'bold', fontSize:16,}}>Coming Soon</Text>
                       <Text style={{color: '#808080'}}>
                         {startDate.toDateString()} - {endDate.toDateString()}
                       </Text>
