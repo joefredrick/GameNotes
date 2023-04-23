@@ -11,6 +11,7 @@ import LoginPage from './src/Pages/LoginPage';
 import SignUpPage from './src/Pages/SignUpPage';
 import { RootStackParamList } from './src/types';
 import GameInfoPage from './src/Pages/GameInfoPage';
+import EpicFreeGamePage from "./src/Pages/EpicFreeGamePage";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -27,6 +28,7 @@ function App(): JSX.Element {
         <Stack.Screen name="Login" component={LoginPage} options={{ headerShown: false }} />
         <Stack.Screen name="Signup" component={SignUpPage} options={{ headerShown: false }} />
         <Stack.Screen name="FreeGame" component={FreeGamePage} />
+        <Stack.Screen name="EpicGame" component={EpicFreeGamePage} />
         <Stack.Screen name="GameInfo" component={GameInfoPage} options={{
           headerStyle: { backgroundColor: '#f4f4f9' },
           headerTitleStyle: { color: 'black' },

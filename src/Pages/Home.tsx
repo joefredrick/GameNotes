@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Dimensions} from "react-native";
 import HomeContainer from "../containers/HomeContainer";
-import PlatformListH from "../containers/PlatformListH";
+import PlatformListH from "../containers/GamePlatformList";
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
@@ -10,7 +10,6 @@ const Home = (props: any) => {
     return(
         <View style={styles.container}>
             <HomeContainer />
-            <PlatformListH props={props.navigation}/>
         </View>
     )
 }

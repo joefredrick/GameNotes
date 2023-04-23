@@ -1,18 +1,19 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import FreeGamePageSection from "../containers/FreeGamePageSection";
 import { NaviRouteScreenNavigationProps } from "../types";
+import EpicFreeGamePageSection from "../containers/EpicFreeGamePageSection";
 
-interface FreeGamePageProps {
+interface EpicFreeGamePageProps {
     navigation: NaviRouteScreenNavigationProps<'Home'>;
 }
 
-const FreeGamePage: React.FunctionComponent<FreeGamePageProps> = (
+const EpicFreeGamePage: React.FunctionComponent<EpicFreeGamePageProps> = (
     { navigation }
 ) => {
-    return (
+    return(
         <View style={styles.container}>
-        <FreeGamePageSection navigation={navigation}/></View>
+            <EpicFreeGamePageSection navigation={navigation}></EpicFreeGamePageSection>
+        </View>
     )
 }
 
@@ -21,5 +22,4 @@ const styles = StyleSheet.create({
         backgroundColor: "#d4e3ea",
     },
 });
-
-export default FreeGamePage;
+export default EpicFreeGamePage;
