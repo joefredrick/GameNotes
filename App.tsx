@@ -13,6 +13,9 @@ import { RootStackParamList } from './src/types';
 import GameInfoPage from './src/Pages/GameInfoPage';
 import EpicFreeGamePage from "./src/Pages/EpicFreeGamePage";
 
+import { useAuth } from './src/hooks/useAuth';
+import './src/config/firebase';
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {

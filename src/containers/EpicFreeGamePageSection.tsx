@@ -167,6 +167,7 @@ const EpicFreeGamePageSection = (props: Props) => {
                 </TouchableOpacity>
               );
             })}
+            <View style={{paddingBottom:100,}}></View>
         </ScrollView>
       </SafeAreaView>
     </View>

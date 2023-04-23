@@ -9,6 +9,11 @@ import {
 } from 'react-native';
 import {NaviRouteScreenNavigationProps} from '../types';
 
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import app from '../config/firebase';
+
+const auth = getAuth(app);
+
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
 
@@ -16,6 +21,31 @@ type Props = {
   navigation: NaviRouteScreenNavigationProps<'Home'>;
 };
 const LoginPageSection = (props: Props) => {
+  const [value, setValue] = React.useState({
+    email: "",
+    password: "",
+    error: "",
+  });
+
+  async function signIn() {
+    if (value.email === "" || value.password === "") {
+      setValue({
+        ...value,
+        error: "Email and password are mandatory.",
+      });
+      return;
+    }
+
+    try {
+      await signInWithEmailAndPassword(auth, value.email, value.password);
+      props.navigation.navigate('TabScreen')
+    } catch (error) {
+      setValue({
+        ...value,
+        error: error.message,
+      });
+    }
+  }
   return (
     <View style={styles.container}>
       <View style={styles.backdropContainer}>
@@ -25,11 +55,20 @@ const LoginPageSection = (props: Props) => {
       <Text style={styles.loginText}>Login</Text>
       <View style={styles.loginSection}>
         <View style={styles.loginCard}>
-          <TextInput style={styles.input} placeholder={'Username'} />
-          <TextInput style={styles.input} placeholder={'Password'} />
+          <TextInput 
+            style={styles.input} 
+            placeholder={'Username'} 
+            value={value.email}
+            onChangeText={(text) => setValue({ ...value, email: text })}
+            />
+          <TextInput 
+            style={styles.input} 
+            placeholder={'Password'}
+            value={value.password}
+            onChangeText={(text) => setValue({ ...value, password: text })}/>
           <TouchableOpacity
             style={styles.submitButton}
-            onPress={() => props.navigation.navigate('TabScreen')}>
+            onPress={signIn}>
             <Text style={styles.submitText}>Login</Text>
           </TouchableOpacity>
           <View style={styles.signupSection}>

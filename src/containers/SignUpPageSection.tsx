@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -8,15 +8,47 @@ import {
   View,
 } from 'react-native';
 import {NaviRouteScreenNavigationProps} from '../types';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import app from '../config/firebase';
 
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
+
+const auth = getAuth(app);
 
 type Props = {
   navigation: NaviRouteScreenNavigationProps<'Home'>;
 };
 
 const SignUpPageSection = (props: Props) => {
+
+  const [value, setValue] = useState({
+    username: '',
+    email: '',
+    password: '',
+    error: ''
+  })
+
+  async function signUp() {
+    if (value.email === '' || value.password === '') {
+      setValue({
+        ...value,
+        error: 'Email and password are mandatory.'
+      })
+      return;
+    }
+
+    try {
+      await createUserWithEmailAndPassword(auth, value.email, value.password);
+      props.navigation.navigate('Login')
+    } catch (error) {
+      setValue({
+        ...value,
+        error: error.message,
+      })
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.backdropContainer}>
@@ -26,12 +58,27 @@ const SignUpPageSection = (props: Props) => {
       <Text style={styles.signupText}>Signup</Text>
       <View style={styles.signupSection}>
         <View style={styles.signupCard}>
-          <TextInput style={styles.input} placeholder={'Username'} />
-          <TextInput style={styles.input} placeholder={'Email'} />
-          <TextInput style={styles.input} placeholder={'Password'} />
+          <TextInput 
+            style={styles.input} 
+            placeholder={'Username'}
+            value={value.username}
+            onChangeText={(text) => setValue({ ...value, username: text })}
+            />
+          <TextInput 
+            style={styles.input} 
+            placeholder={'Email'} 
+            value={value.email}
+            onChangeText={(text) => setValue({ ...value, email: text })}
+            />
+          <TextInput 
+            style={styles.input} 
+            placeholder={'Password'} 
+            value={value.password}
+            onChangeText={(text) => setValue({ ...value, password: text })}
+            />
           <TouchableOpacity
             style={styles.submitButton}
-            onPress={() => props.navigation.navigate('Login')}>
+            onPress={signUp}>
             <Text
               style={styles.submitText}>
               Signup
