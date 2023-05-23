@@ -65,6 +65,7 @@ const LoginPageSection = (props: Props) => {
             style={styles.input} 
             placeholder={'Password'}
             value={value.password}
+            secureTextEntry={true}
             onChangeText={(text) => setValue({ ...value, password: text })}/>
           <TouchableOpacity
             style={styles.submitButton}

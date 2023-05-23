@@ -17,6 +17,11 @@ export type RootStackParamList = {
     EpicGame: undefined;
   };
 
+export type LoginStackParamList = {
+    Login: undefined;
+    Signup: undefined;
+};
+
 export type NaviRouteScreenNavigationProps<
   Screen extends keyof RootStackParamList,
 > = NativeStackNavigationProp<RootStackParamList , Screen>;
