@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -11,10 +11,13 @@ import {NaviRouteScreenNavigationProps} from '../types';
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import app from '../config/firebase';
 
+import { getFirestore, doc, addDoc, setDoc, collection } from "firebase/firestore";
+
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
 
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 type Props = {
   navigation: NaviRouteScreenNavigationProps<'Home'>;
@@ -23,29 +26,40 @@ type Props = {
 const SignUpPageSection = (props: Props) => {
 
   const [value, setValue] = useState({
-    username: '',
+    displayname: '',
     email: '',
     password: '',
     error: ''
   })
 
   async function signUp() {
-    if (value.email === '' || value.password === '') {
+    if (value.email === '' || value.password === '' || value.displayname === '') {
       setValue({
         ...value,
-        error: 'Email and password are mandatory.'
+        error: 'UserName, Email and password are mandatory.'
       })
+      alert('UserName, Email and password are mandatory.');
       return;
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, value.email, value.password);
+      createUserWithEmailAndPassword(auth, value.email, value.password).then(()=>{
+        console.log("User Created");
+        const userId = auth.currentUser?.uid || ""
+        setDoc(doc(db, "users", userId), {
+          UserName:  value.displayname,
+          email: value.email,
+        }
+        )
+        console.log("User Data Saved");
+      });
       props.navigation.navigate('Login')
     } catch (error) {
       setValue({
         ...value,
         error: error.message,
       })
+      alert(error.message)
     }
   }
 
@@ -61,8 +75,8 @@ const SignUpPageSection = (props: Props) => {
           <TextInput 
             style={styles.input} 
             placeholder={'Username'}
-            value={value.username}
-            onChangeText={(text) => setValue({ ...value, username: text })}
+            value={value.displayname}
+            onChangeText={(text) => setValue({ ...value, displayname: text })}
             />
           <TextInput 
             style={styles.input} 
@@ -74,6 +88,7 @@ const SignUpPageSection = (props: Props) => {
             style={styles.input} 
             placeholder={'Password'} 
             value={value.password}
+            secureTextEntry={true}
             onChangeText={(text) => setValue({ ...value, password: text })}
             />
           <TouchableOpacity

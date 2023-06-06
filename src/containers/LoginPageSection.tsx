@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Text,
   View,
@@ -24,6 +24,7 @@ const LoginPageSection = (props: Props) => {
   const [value, setValue] = React.useState({
     email: "",
     password: "",
+    displayname: "",
     error: "",
   });
 
@@ -33,6 +34,7 @@ const LoginPageSection = (props: Props) => {
         ...value,
         error: "Email and password are mandatory.",
       });
+      alert("Email and password are mandatory.")
       return;
     }
 
@@ -44,8 +46,10 @@ const LoginPageSection = (props: Props) => {
         ...value,
         error: error.message,
       });
-    }
+      alert(error.message)
+    } 
   }
+
   return (
     <View style={styles.container}>
       <View style={styles.backdropContainer}>
