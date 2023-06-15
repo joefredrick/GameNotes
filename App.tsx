@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
 } from 'react-native';
@@ -16,9 +16,23 @@ import EpicFreeGamePage from "./src/Pages/EpicFreeGamePage";
 import { useAuth } from './src/hooks/useAuth';
 import './src/config/firebase';
 
+
+import {
+  requestUserPermission,
+  NotificationListner,
+  GetFCMToken,
+} from './src/utils/pushnotification_helper';
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
+
+  useEffect(()=> {
+    requestUserPermission();
+    GetFCMToken();
+    NotificationListner();
+  }, [])
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Login' screenOptions={{
