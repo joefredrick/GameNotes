@@ -20,6 +20,7 @@ export type RootStackParamList = {
 export type LoginStackParamList = {
     Login: undefined;
     Signup: undefined;
+    TabScreen: undefined;
 };
 
 export type NaviRouteScreenNavigationProps<

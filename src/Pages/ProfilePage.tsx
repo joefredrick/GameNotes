@@ -1,12 +1,26 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, StyleSheet, View  } from "react-native";
+import { NaviRouteScreenNavigationProps } from '../types';
+import ProfilePageSection from "../containers/ProfilePageSection";
 
-const ProfilePage = () => {
+interface ProfilePageProps {
+    navigation: NaviRouteScreenNavigationProps<'Home'>;
+}
+
+const ProfilePage:React.FunctionComponent<ProfilePageProps>  = ({navigation}) => {
     return(
-        <>
-            <Text>Profile Screen</Text>
-        </>
+        <View style={styles.container}>
+            <Text>Profile Page</Text>
+            <ProfilePageSection navigation={navigation}/>
+        </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: "#d4e3ea",
+        height:"100%"
+    },
+});
 
 export default ProfilePage;

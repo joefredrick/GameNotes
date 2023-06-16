@@ -4,6 +4,8 @@ import { Image, StyleSheet, Dimensions, View, Text } from 'react-native'
 import { getAuth } from "firebase/auth";
 import app from '../config/firebase';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 const db = getFirestore(app);
 
@@ -14,18 +16,34 @@ const HEIGHT = Dimensions.get("window").height;
 
 const HomeContainer = () => {
     const [userName, setUserName] = useState();
+    const [userID, setuserID] = useState("")
     useEffect(() => {
-        const getUserData:any = () => {
-            const userId = getAuth(app).currentUser?.uid || "";
-            const docRef = doc(db, "users", userId);
-            getDoc(docRef).then((res) => {
-                const data = res.data()
-                const UserName = data?.["UserName"]
-                setUserName(UserName)
-            });
-        }
-        getUserData();
+        (async()=> {
+            const value = await AsyncStorage.getItem('user')
+            if(value !== null){
+              console.log(value);
+              setuserID(value)
+            }
+            else{
+                const uid = getAuth(app).currentUser?.uid || "";
+                setuserID(uid)
+            }
+        })();
+        
     }, [])
+
+    const getUserData:any = () => {
+        const docRef = doc(db, "users", userID);
+        getDoc(docRef).then((res) => {
+            const data = res.data()
+            const UserName = data?.["UserName"]
+            setUserName(UserName)
+        });
+    }
+
+    if(userID){
+        getUserData()
+    }
 
     return (
         <View style={styles.container}>

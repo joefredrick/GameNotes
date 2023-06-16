@@ -12,8 +12,9 @@ import GameInfoPage from "../Pages/GameInfoPage";
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AppNavigation = () => {
+  return (
     <NavigationContainer>
-        <Stack.Navigator initialRouteName='TabScreen' screenOptions={{
+      <Stack.Navigator initialRouteName='TabScreen' screenOptions={{
         animation: 'slide_from_right',
         headerStyle: { backgroundColor: '#5EA2E5' },
         headerTitleStyle: { color: 'white' },
@@ -28,6 +29,7 @@ const AppNavigation = () => {
         }} />
       </Stack.Navigator>
     </NavigationContainer>
+  );
 }
 
 export default AppNavigation;

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {NaviRouteScreenNavigationProps} from '../types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import app from '../config/firebase';
@@ -40,6 +41,7 @@ const LoginPageSection = (props: Props) => {
 
     try {
       await signInWithEmailAndPassword(auth, value.email, value.password);
+      await AsyncStorage.setItem('user', auth.currentUser?.uid || "")
       props.navigation.navigate('TabScreen')
     } catch (error) {
       setValue({
