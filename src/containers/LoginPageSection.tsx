@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import app from '../config/firebase';
+import DataContext from '../store/dataContext';
 
 const auth = getAuth(app);
 
@@ -22,6 +23,9 @@ type Props = {
   navigation: NaviRouteScreenNavigationProps<'Home'>;
 };
 const LoginPageSection = (props: Props) => {
+
+  const { signIn } = React.useContext(DataContext);
+
   const [value, setValue] = React.useState({
     email: "",
     password: "",
@@ -29,7 +33,7 @@ const LoginPageSection = (props: Props) => {
     error: "",
   });
 
-  async function signIn() {
+  async function signedIn() {
     if (value.email === "" || value.password === "") {
       setValue({
         ...value,
@@ -42,7 +46,8 @@ const LoginPageSection = (props: Props) => {
     try {
       await signInWithEmailAndPassword(auth, value.email, value.password);
       await AsyncStorage.setItem('user', auth.currentUser?.uid || "")
-      props.navigation.navigate('App')
+      signIn(auth.currentUser?.uid);
+      console.log("Data Saved")
     } catch (error) {
       setValue({
         ...value,
@@ -75,7 +80,7 @@ const LoginPageSection = (props: Props) => {
             onChangeText={(text) => setValue({ ...value, password: text })}/>
           <TouchableOpacity
             style={styles.submitButton}
-            onPress={signIn}>
+            onPress={signedIn}>
             <Text style={styles.submitText}>Login</Text>
           </TouchableOpacity>
           <View style={styles.signupSection}>

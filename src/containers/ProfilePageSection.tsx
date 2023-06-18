@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Button } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NaviRouteScreenNavigationProps } from '../types';
+import DataContext from '../store/dataContext';
 
 type Props = {
     navigation: NaviRouteScreenNavigationProps<'Login'>;
@@ -9,14 +10,16 @@ type Props = {
 
 export const ProfilePageSection = (props: Props) => {
 
-  const signOut = async() => {
+  const { signOut } = React.useContext(DataContext);
+
+  const signedOut = async() => {
     await AsyncStorage.removeItem('user');
-    props.navigation.navigate('App')
+    signOut();
   } 
 
   return (
     <View>
-        <Button title='SignOut' color={"blue"} onPress={signOut}/>
+        <Button title='SignOut' color={"blue"} onPress={signedOut}/>
     </View>
   )
 }
