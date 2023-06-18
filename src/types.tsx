@@ -15,12 +15,13 @@ export type RootStackParamList = {
     FreeGame:undefined;
     GameInfo: undefined;
     EpicGame: undefined;
+    App: undefined;
   };
 
 export type LoginStackParamList = {
     Login: undefined;
     Signup: undefined;
-    TabScreen: undefined;
+    App: undefined;
 };
 
 export type NaviRouteScreenNavigationProps<

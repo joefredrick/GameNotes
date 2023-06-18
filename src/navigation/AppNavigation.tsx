@@ -7,13 +7,14 @@ import Home from "../Pages/Home";
 import FreeGamePage from "../Pages/FreeGamePage";
 import EpicFreeGamePage from "../Pages/EpicFreeGamePage";
 import GameInfoPage from "../Pages/GameInfoPage";
+import App from "../../App";
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AppNavigation = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer independent={true}>
       <Stack.Navigator initialRouteName='TabScreen' screenOptions={{
         animation: 'slide_from_right',
         headerStyle: { backgroundColor: '#5EA2E5' },
@@ -23,6 +24,7 @@ const AppNavigation = () => {
         <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
         <Stack.Screen name="FreeGame" component={FreeGamePage} />
         <Stack.Screen name="EpicGame" component={EpicFreeGamePage} />
+        <Stack.Screen name="App" component={App} options={{ headerShown: false, gestureEnabled: false }} />
         <Stack.Screen name="GameInfo" component={GameInfoPage} options={{
           headerStyle: { backgroundColor: '#f4f4f9' },
           headerTitleStyle: { color: 'black' },

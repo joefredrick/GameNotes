@@ -42,7 +42,7 @@ const LoginPageSection = (props: Props) => {
     try {
       await signInWithEmailAndPassword(auth, value.email, value.password);
       await AsyncStorage.setItem('user', auth.currentUser?.uid || "")
-      props.navigation.navigate('TabScreen')
+      props.navigation.navigate('App')
     } catch (error) {
       setValue({
         ...value,

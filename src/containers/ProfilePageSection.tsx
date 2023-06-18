@@ -11,7 +11,7 @@ export const ProfilePageSection = (props: Props) => {
 
   const signOut = async() => {
     await AsyncStorage.removeItem('user');
-    props.navigation.navigate('FreeGames')
+    props.navigation.navigate('App')
   } 
 
   return (

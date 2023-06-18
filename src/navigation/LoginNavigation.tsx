@@ -5,12 +5,13 @@ import { LoginStackParamList } from "../types";
 import LoginPage from "../Pages/LoginPage";
 import SignUpPage from "../Pages/SignUpPage";
 import BottomTabNavigation from "./BottomTabNavigation";
+import App from "../../App";
 
 const Stack = createNativeStackNavigator<LoginStackParamList>();
 
 const LoginNavigation = () => {
   return(
-    <NavigationContainer>
+    <NavigationContainer independent={true}>
         <Stack.Navigator initialRouteName='Login' screenOptions={{
         animation: 'slide_from_right',
         headerStyle: { backgroundColor: '#5EA2E5' },
@@ -18,7 +19,7 @@ const LoginNavigation = () => {
       }}>
         <Stack.Screen name="Login" component={LoginPage} options={{ headerShown: false }} />
         <Stack.Screen name="Signup" component={SignUpPage} options={{ headerShown: false }} />
-        <Stack.Screen name="TabScreen" component={BottomTabNavigation} options={{ headerShown: false }} />
+        <Stack.Screen name="App" component={App} options={{ headerShown: false, gestureEnabled: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
