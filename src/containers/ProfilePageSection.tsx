@@ -50,10 +50,8 @@ export const ProfilePageSection = (props: Props) => {
             </Neomorph>
           </View>
           <View>
-            <Neomorph inner style={styles.neomorph4}>
-
               <View style={styles.detailContainer}>
-                <Neomorph style={styles.neomorph5}>
+                <Neomorph inner style={styles.neomorph5}>
                   <Text style={styles.title}>User Name: </Text>
                   <TextInput style={edit? styles.ansEdit: styles.ansNonEdit} placeholder={"Username"} value={user.userName} editable={edit}
                     onChangeText={(text)=>{setUser({...user, userName: text})}}/>
@@ -61,7 +59,7 @@ export const ProfilePageSection = (props: Props) => {
               </View>
 
               <View style={styles.detailContainer}>
-                <Neomorph style={styles.neomorph5}>
+                <Neomorph inner style={styles.neomorph5}>
                   <Text style={styles.title}>Age </Text>
                   <TextInput style={edit? styles.ansEdit: styles.ansNonEdit} placeholder={"Age"} value={user.age} editable={edit}
                     onChangeText={(text)=>{setUser({...user, age: text})}}/>
@@ -69,7 +67,7 @@ export const ProfilePageSection = (props: Props) => {
               </View>
 
               <View style={styles.detailContainer}>
-                <Neomorph style={styles.neomorph5}>
+                <Neomorph inner style={styles.neomorph5}>
                   <Text style={styles.title}>User Email: </Text>
                   <Text style={styles.ansNonEdit}>{user.userEmail}</Text>
                 </Neomorph>
@@ -78,7 +76,6 @@ export const ProfilePageSection = (props: Props) => {
               <View style={styles.button}>
                 <Button title='SignOut' onPress={signedOut} />
               </View>
-            </Neomorph>
           </View>
         </View>
       </Shadow>
