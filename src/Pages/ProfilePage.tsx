@@ -10,7 +10,6 @@ interface ProfilePageProps {
 const ProfilePage:React.FunctionComponent<ProfilePageProps>  = ({navigation}) => {
     return(
         <View style={styles.container}>
-            <Text>Profile Page</Text>
             <ProfilePageSection navigation={navigation}/>
         </View>
     )
