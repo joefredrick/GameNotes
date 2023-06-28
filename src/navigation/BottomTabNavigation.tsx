@@ -10,6 +10,7 @@ import GameIcon from '../assets/games.svg';
 import ProfileIcon from '../assets/user.svg';
 import Colors from "../constants/Colors";
 import FreeGamePage from "../Pages/FreeGamePage";
+import DemoPage from "../Pages/DemoPage";
 
 const Tab = createBottomTabNavigator<TabParamList>();
 

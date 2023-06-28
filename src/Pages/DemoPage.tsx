@@ -1,63 +1,16 @@
-import React, { useEffect } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Dimensions,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
-import {NaviRouteScreenNavigationProps} from '../types';
+import React from "react";
+import { Dimensions, Text, View, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { NaviRouteScreenNavigationProps } from "../types";
 import { Neomorph, Shadow } from "react-native-neomorph-shadows";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import app from '../config/firebase';
-import DataContext from '../store/dataContext';
-
-const auth = getAuth(app);
-
-const HEIGHT = Dimensions.get('window').height;
-const WIDTH = Dimensions.get('window').width;
 
 type Props = {
   navigation: NaviRouteScreenNavigationProps<'Home'>;
 };
-const LoginPageSection = (props: Props) => {
 
-  const { signIn } = React.useContext(DataContext);
+const WIDTH = Dimensions.get("window").width;
+const HEIGHT = Dimensions.get("window").height;
 
-  const [value, setValue] = React.useState({
-    email: "",
-    password: "",
-    displayname: "",
-    error: "",
-  });
-
-  async function signedIn() {
-    if (value.email === "" || value.password === "") {
-      setValue({
-        ...value,
-        error: "Email and password are mandatory.",
-      });
-      alert("Email and password are mandatory.")
-      return;
-    }
-
-    try {
-      await signInWithEmailAndPassword(auth, value.email, value.password);
-      await AsyncStorage.setItem('user', auth.currentUser?.uid || "")
-      signIn(auth.currentUser?.uid);
-      console.log("Data Saved")
-    } catch (error) {
-      setValue({
-        ...value,
-        error: error.message,
-      });
-      alert(error.message)
-    } 
-  }
-
+const DemoPage = (props: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerSection}>
@@ -102,26 +55,16 @@ const LoginPageSection = (props: Props) => {
                 inner
                 style={styles.input}
               >
-                <TextInput 
-                  placeholder={'Username'}
-                  value={value.email}
-                  onChangeText={(text) => setValue({ ...value, email: text })}
-                  />
+                <TextInput placeholder={'Username'}></TextInput>
               </Shadow>
               <Shadow
                 inner
                 style={styles.input}
               >
                 <TextInput 
-                  placeholder={'Password'}
-                  value={value.password}
-                  secureTextEntry={true}
-                  onChangeText={(text) => setValue({ ...value, password: text })}
-                />
+                placeholder={'Password'}></TextInput>
               </Shadow>
-              <TouchableOpacity 
-                style={{ paddingTop: 20, alignItems: 'center' }}
-                onPress={signedIn}>
+              <TouchableOpacity style={{ paddingTop: 20, alignItems: 'center' }}>
                 <Neomorph style={styles.submitButton}>
                   <Text style={styles.submitText}>Login</Text>
                 </Neomorph>
@@ -173,6 +116,8 @@ const LoginPageSection = (props: Props) => {
     </View>
   )
 }
+
+export default DemoPage;
 
 const styles = StyleSheet.create({
   container: {
@@ -343,6 +288,4 @@ const styles = StyleSheet.create({
     marginRight: WIDTH / 2,
     marginLeft: -WIDTH / 8,
   },
-  
-});
-export default LoginPageSection;
+})

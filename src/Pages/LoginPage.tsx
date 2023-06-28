@@ -13,7 +13,7 @@ const LoginPage: React.FunctionComponent<LoginPageProps> = (
 ) => {
     return (
         <View>
-            <Header />
+            {/* <Header /> */}
             <LoginPageSection navigation={navigation}></LoginPageSection>
         </View>
     )
