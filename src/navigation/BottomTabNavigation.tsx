@@ -22,7 +22,7 @@ const BottomTabNavigation = () => {
         <Tab.Navigator
         screenOptions={{
             tabBarActiveTintColor: Colors[colorScheme].tint,
-            tabBarLabelStyle: { fontSize: 10},
+            tabBarLabelStyle: { fontSize: 10, fontFamily: 'OpenSans-Regular'},
             tabBarStyle: {
                 padding: 5,
                 height: 50, 
@@ -38,6 +38,7 @@ const BottomTabNavigation = () => {
                 component={Home}
                 options={{
                     headerStyle: {backgroundColor: '#f4f4f9'},
+                    headerShown: false,
                     tabBarIcon: ({color}) => <HomeIcon fill={color} height={25} width={25}/>,
                 }} 
                 />

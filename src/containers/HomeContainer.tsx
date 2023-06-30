@@ -47,8 +47,13 @@ const HomeContainer = () => {
 
     return (
         <View style={styles.container}>
-            <Image source={require("../assets/joystick_home.png")} style={styles.img}></Image>
-            <Text style={styles.name}>Welcome {userName}</Text>
+            <View style={styles.headerSection}>
+                <Text style={styles.headerText}>Home</Text>
+            </View>
+            <View style={styles.mainContainer}>
+                <Image source={require("../assets/joystick_home.png")} style={styles.img}></Image>
+                <Text style={styles.welcomeText}>Welcome {userName}</Text>
+            </View>
         </View>
     )
 }
@@ -61,20 +66,36 @@ const styles = StyleSheet.create({
         width: WIDTH / 1.9,
     },
     container: {
-        display: "flex",
-        height: HEIGHT / 2.5,
-        width: WIDTH,
-        alignItems: "center",
-        justifyContent: "center",
-        // backgroundColor: '#c4e0fdda',
-
+      backgroundColor: "#DEE9FD",
+      height: HEIGHT,
+      width: WIDTH,
+      alignItems: 'center',
     },
-    name: {
-        color: "#3265C8",
-        // fontFamily: "sans-serif-medium",
-        fontSize: 28,
-        fontWeight: "bold",
-    }
+    headerSection: {
+      width: '100%',
+      height: '10%',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      backgroundColor: '#DEE9FD',
+    },
+    headerText: {
+      color: '#91A1BD',
+      marginTop: 20,
+      fontSize: 26,
+      fontFamily: 'MW_Regular',
+    },
+    mainContainer: {
+      height: '90%',
+      width: WIDTH, 
+      alignItems: 'center',
+    },
+    welcomeText: {
+        paddingTop: 10,
+        alignSelf: 'center',
+        fontSize: 25,
+        color: '#6C7A93',
+        fontFamily: 'OpenSans-Bold',
+      },
 })
 
 export default HomeContainer

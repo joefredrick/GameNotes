@@ -23,6 +23,23 @@ const styles = StyleSheet.create({
     width: WIDTH,
     alignItems: 'center',
   },
+  headerSection: {
+    width: '100%',
+    height: '10%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: '#DEE9FD',
+  },
+  headerText: {
+    color: '#91A1BD',
+    marginTop: 20,
+    fontSize: 26,
+    fontFamily: 'MW_Regular',
+  },
+  mainContainer: {
+    height: '90%',
+    width: WIDTH,
+  },
 })
 
 export default DemoPage;
