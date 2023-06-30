@@ -14,7 +14,7 @@ const SignUpPage: React.FunctionComponent<SignupPageProps> = (
 ) => {
     return (
         <View>
-            <Header />
+            {/* <Header /> */}
             <SignUpPageSection navigation={navigation}></SignUpPageSection>
         </View>
     )
