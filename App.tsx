@@ -76,8 +76,12 @@ function App(): JSX.Element {
               <Stack.Screen name="FreeGame" component={FreeGamePage} />
               <Stack.Screen name="EpicGame" component={EpicFreeGamePage} />
               <Stack.Screen name="GameInfo" component={GameInfoPage} options={{
-                headerStyle: { backgroundColor: '#f4f4f9' },
-                headerTitleStyle: { color: 'black' },
+                headerStyle: { backgroundColor: '#DEE9FD' },
+                headerTitleStyle: { 
+                  color: '#91A1BD',
+                  fontSize: 26,
+                  fontFamily: 'MW_Regular',
+                },
               }} /></>
           ) : (
             <>

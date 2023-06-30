@@ -10,6 +10,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {NaviRouteScreenNavigationProps} from '../types';
+import { Neomorph } from "react-native-neomorph-shadows";
 
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
@@ -34,8 +35,10 @@ const GameInfoPageSection = (props: Props) => {
       </View>
       <ScrollView style={styles.mainContainer}>
         <Text style={styles.title}>{GameInfo.title}</Text>
-        <View style={styles.offerStyleBox}>
-          <Text style={styles.offerStyle}>{GameInfo.offerType}</Text>
+        <View style={{alignSelf: 'center',}}>
+          <Neomorph style={styles.offerStyleBox}>
+            <Text style={styles.offerStyle}>{GameInfo.offerType}</Text>
+          </Neomorph>
         </View>
         {upcoming ? (
           <></>
@@ -47,27 +50,30 @@ const GameInfoPageSection = (props: Props) => {
               alignItems: 'center',
               marginBottom: 10,
             }}>
-            <View
+            <Neomorph
               style={{
                 height: 30,
                 width: 50,
-                borderRadius: 15,
+                borderRadius: 10,
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: '#0078f2',
+                backgroundColor: '#DEE9FD',
+                borderWidth: 0.35,
+                borderColor: '#91A1BD',
+                shadowRadius: 10,
               }}>
-              <Text style={{color: 'white'}}>-100%</Text>
-            </View>
+              <Text style={{color: '#6C7A93'}}>-100%</Text>
+            </Neomorph>
             <Text
               style={{
                 textDecorationLine: 'line-through',
                 paddingLeft: 10,
-                color: 'black',
+                color: '#6C7A93',
               }}>
               {'\u20B9'} {GameInfo.price.totalPrice.discount}
             </Text>
-            <Text style={{paddingLeft: 10, color: 'black'}}>
+            <Text style={{paddingLeft: 10, color: '#6C7A93'}}>
               {'\u20B9'} {GameInfo.price.totalPrice.discountPrice}
             </Text>
           </View>
@@ -76,7 +82,8 @@ const GameInfoPageSection = (props: Props) => {
           <Text
             style={{
               fontSize: 16,
-              color: 'black',
+              color: '#6C7A93',
+              fontFamily: 'OpenSans-Regular',
               alignSelf: 'center',
               marginBottom: 10,
             }}>
@@ -86,7 +93,8 @@ const GameInfoPageSection = (props: Props) => {
           <Text
             style={{
               fontSize: 16,
-              color: 'black',
+              color: '#6C7A93',
+              fontFamily: 'OpenSans-Regular',
               alignSelf: 'center',
               marginBottom: 10,
             }}>
@@ -94,11 +102,14 @@ const GameInfoPageSection = (props: Props) => {
           </Text>
         )}
         <TouchableOpacity
-          style={styles.redeemButton}
           onPress={() => {
             Linking.openURL(GameInfo.RedeemLink);
           }}>
-          <Text style={styles.redeemText}>Go To Page</Text>
+            <View style={{alignItems: 'center'}}>
+              <Neomorph style={styles.redeemButton}>
+              <Text style={styles.redeemText}>Go To Page</Text>
+              </Neomorph>
+          </View>
         </TouchableOpacity>
         <View
           style={{
@@ -106,44 +117,44 @@ const GameInfoPageSection = (props: Props) => {
             margin: 10,
             justifyContent: 'space-between',
           }}>
-          <Text style={{fontSize: 16, color: '#808080'}}>Developer</Text>
-          <Text style={{fontSize: 16, color: 'black'}}>
+          <Text style={{fontSize: 16, color: '#91A1BD', fontFamily: 'OpenSans-Regular'}}>Developer</Text>
+          <Text style={{fontSize: 16, color: '#6C7A93', fontFamily: 'OpenSans-Regular'}}>
             {GameInfo.customAttributes[1].value}
           </Text>
         </View>
-        <View style={{borderBottomWidth: 0.5, width: '100%'}}></View>
+        <View style={{borderBottomWidth: 0.5, width: '100%', borderColor: '#91A1BD',}}></View>
         <View
           style={{
             flexDirection: 'row',
             margin: 10,
             justifyContent: 'space-between',
           }}>
-          <Text style={{fontSize: 16, color: '#808080'}}>Publisher</Text>
-          <Text style={{fontSize: 16, color: 'black'}}>
+          <Text style={{fontSize: 16, color: '#91A1BD', fontFamily: 'OpenSans-Regular'}}>Publisher</Text>
+          <Text style={{fontSize: 16, color: '#6C7A93', fontFamily: 'OpenSans-Regular'}}>
             {GameInfo.customAttributes[0].value}
           </Text>
         </View>
-        <View style={{borderBottomWidth: 0.5, width: '100%'}}></View>
+        <View style={{borderBottomWidth: 0.5, width: '100%', borderColor: '#91A1BD',}}></View>
         <View
           style={{
             flexDirection: 'row',
             margin: 10,
             justifyContent: 'space-between',
           }}>
-          <Text style={{fontSize: 16, color: '#808080'}}>Release Date</Text>
-          <Text style={{fontSize: 16, color: 'black'}}>
+          <Text style={{fontSize: 16, color: '#91A1BD', fontFamily: 'OpenSans-Regular'}}>Release Date</Text>
+          <Text style={{fontSize: 16, color: '#6C7A93', fontFamily: 'OpenSans-Regular'}}>
             {releaseDate.toLocaleDateString()}
           </Text>
         </View>
-        <View style={{borderBottomWidth: 0.5, width: '100%'}}></View>
+        <View style={{borderBottomWidth: 0.5, width: '100%', borderColor: '#91A1BD',}}></View>
         <View
           style={{
             flexDirection: 'column',
             margin: 10,
             justifyContent: 'space-between',
           }}>
-          <Text style={{fontSize: 16, color: '#808080'}}>Description</Text>
-          <Text style={{fontSize: 16, color: 'black', padding: 5}}>
+          <Text style={{fontSize: 16, color: '#91A1BD', fontFamily: 'OpenSans-Regular'}}>Description</Text>
+          <Text style={{fontSize: 16, color: '#6C7A93', fontFamily: 'OpenSans-Regular', padding: 5}}>
             {GameInfo.description}
           </Text>
         </View>
@@ -154,7 +165,7 @@ const GameInfoPageSection = (props: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#d4e3ea',
+    backgroundColor: '#DEE9FD',
     width: WIDTH,
     height: HEIGHT,
     display: 'flex',
@@ -163,7 +174,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     width: WIDTH,
     height: HEIGHT / 3.5,
-    backgroundColor: 'lightblue',
+    backgroundColor: '#cad3e8',
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
@@ -185,42 +196,46 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    color: 'black',
+    color: '#6C7A93',
     marginLeft: 10,
     marginBottom: 5,
-    fontWeight: 'bold',
+    fontFamily: 'OpenSans-Bold',
     textAlign: 'center',
   },
   offerStyle: {
     fontSize: 12,
-    fontWeight: 'bold',
-    color: 'white',
+    fontFamily: 'OpenSans-Bold',
+    color: '#6C7A93',
     alignSelf: 'center',
   },
   offerStyleBox: {
     height: 30,
     width: 100,
-    borderRadius: 15,
+    borderRadius: 10,
+    borderWidth: 0.35,
+    shadowRadius: 10,
     display: 'flex',
     justifyContent: 'center',
     alignSelf: 'center',
-    backgroundColor: 'black',
+    backgroundColor: '#DEE9FD',
     marginBottom: 10,
   },
   redeemButton: {
     height: 50,
     width: 150,
-    backgroundColor: '#59BF40',
+    backgroundColor: '#DEE9FD',
     borderRadius: 50,
+    shadowRadius: 10,
+    borderWidth: 0.35,
+    borderColor: '#91A1BD',
     justifyContent: 'center',
-    alignSelf: 'center',
   },
   redeemText: {
     display: 'flex',
     textAlign: 'center',
     fontSize: 18,
-    color: '#f4f4f9',
-    fontWeight: 'bold',
+    color: '#6C7A93',
+    fontFamily: 'OpenSans-Bold',
   },
 });
 
