@@ -45,6 +45,7 @@ const BottomTabNavigation = () => {
             <Tab.Screen name="FreeGames" component={FreeGamePage}
                 options={{
                     headerStyle: {backgroundColor: '#f4f4f9'},
+                    headerShown: false,
                     tabBarIcon: ({color}) => <GameIcon fill={color} height={30} width={30}/>,
                 }} 
                 />

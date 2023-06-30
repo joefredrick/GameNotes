@@ -45,10 +45,10 @@ const GamePlatformList = (props: any) => {
 
 const styles = StyleSheet.create({
    title:{
-    fontSize: 32,
-    fontWeight: "bold",
-    margin: 10,
-    color: "black"
+    fontSize: 28,
+    paddingLeft: 10,
+    fontFamily: 'OpenSans-Bold',
+    color: "#6C7A93",
    },
    container:{
     height: HEIGHT,
