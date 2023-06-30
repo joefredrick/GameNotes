@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import {NaviRouteScreenNavigationProps} from '../types';
+import { Neomorph } from 'react-native-neomorph-shadows';
 
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
@@ -61,7 +62,7 @@ const EpicFreeGamePageSection = (props: Props) => {
               );
               return (
                 <TouchableOpacity key={index} onPress={() => props.navigation.navigate('GameInfo', {data: item, upcoming: false, gameDate: endDate})}>
-                  <View style={styles.currentCard} key={index}>
+                  <Neomorph style={styles.currentCard} key={index}>
                     <View style={styles.cardImage}>
                       <View
                         style={{
@@ -80,7 +81,7 @@ const EpicFreeGamePageSection = (props: Props) => {
                             display: 'flex',
                             alignSelf: 'center',
                             fontSize: 16,
-                            fontWeight: 'bold',
+                            fontFamily: 'OpenSans-Bold',
                             color: 'white',
                             paddingTop: 5,
                           }}>
@@ -90,43 +91,47 @@ const EpicFreeGamePageSection = (props: Props) => {
                     </View>
                     <View style={styles.cardContent}>
                       <Text style={styles.gameTitle}>{item.title}</Text>
-                      <Text style={{fontSize: 16, color: '#808080'}}>
+                      <Text style={{fontSize: 16, color: '#6C7A93', fontFamily: 'OpenSans-Regular'}}>
                         {item.offerType}
                       </Text>
-                      <Text style={{fontSize: 16, color: 'green', fontWeight: 'bold'}}>
+                      <Text style={{fontSize: 16, color: 'green', fontFamily: 'OpenSans-Bold'}}>
                         {item.status}
                       </Text>
-                      <Text style={{fontSize: 16, color: '#808080'}}>
+                      <Text style={{fontSize: 16, color: '#6C7A93', fontFamily: 'OpenSans-Regular'}}>
                         Free Until - {endDate.toDateString()}
                       </Text>
                       <View
                         style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View
+                        <Neomorph
                           style={{
                             height: 30,
                             width: 50,
-                            borderRadius: 15,
+                            borderRadius: 10,
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            backgroundColor: '#0078f2',
+                            backgroundColor: '#DEE9FD',
+                            borderWidth: 0.35,
+                            borderColor: '#91A1BD',
+                            shadowRadius: 10,
                           }}>
-                          <Text style={{color: 'white'}}>-100%</Text>
-                        </View>
+                          <Text style={{color: '#6C7A93',}}>-100%</Text>
+                        </Neomorph>
                         <Text
                           style={{
                             textDecorationLine: 'line-through',
                             paddingLeft: 10,
-                            color: '#808080',
+                            color: '#6C7A93', 
+                            fontFamily: 'OpenSans-Regular'
                           }}>
                           {'\u20B9'} {item.price.totalPrice.discount}
                         </Text>
-                        <Text style={{paddingLeft: 10, color: '#808080'}}>
+                        <Text style={{paddingLeft: 10, color: '#6C7A93', fontFamily: 'OpenSans-Regular'}}>
                           {'\u20B9'} {item.price.totalPrice.discountPrice}
                         </Text>
                       </View>
                     </View>
-                  </View>
+                  </Neomorph>
                 </TouchableOpacity>
               );
             })}
@@ -145,7 +150,7 @@ const EpicFreeGamePageSection = (props: Props) => {
               );
               return (
                 <TouchableOpacity key={index} onPress={() => props.navigation.navigate('GameInfo', {data: item, upcoming: true,  gameDate: startDate})}>
-                  <View style={styles.currentCard} key={index}>
+                  <Neomorph style={styles.currentCard} key={index}>
                     <View style={styles.cardImage}>
                       <View style={{height: '80%', width: '80%'}}>
                         <Image
@@ -156,14 +161,14 @@ const EpicFreeGamePageSection = (props: Props) => {
                     </View>
                     <View style={styles.cardContent}>
                       <Text style={styles.gameTitle}>{item.title}</Text>
-                      <Text style={{color: '#808080'}}>{item.offerType}</Text>
-                      <Text style={{fontSize: 16, color: 'red', fontWeight: 'bold'}}>{item.status}</Text>
-                      <Text style={{color: '#808080', fontWeight: 'bold', fontSize:16,}}>Coming Soon</Text>
-                      <Text style={{color: '#808080'}}>
+                      <Text style={{color: '#6C7A93',}}>{item.offerType}</Text>
+                      <Text style={{fontSize: 16, color: 'red', fontFamily: 'OpenSans-Bold'}}>{item.status}</Text>
+                      <Text style={{color: '#6C7A93', fontFamily: 'OpenSans-Bold', fontSize:16,}}>Coming Soon</Text>
+                      <Text style={{color: '#6C7A93',}}>
                         {startDate.toDateString()} - {endDate.toDateString()}
                       </Text>
                     </View>
-                  </View>
+                  </Neomorph>
                 </TouchableOpacity>
               );
             })}
@@ -176,31 +181,31 @@ const EpicFreeGamePageSection = (props: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#d4e3ea',
+    backgroundColor: '#DEE9FD',
     height: HEIGHT,
     width: WIDTH,
     margin: 10,
   },
   text: {
     fontSize: 22,
-    fontWeight: 'bold',
-    color: 'black',
+    fontFamily: 'OpenSans-Bold',
+    color: '#6C7A93',
   },
   cards: {
     display: 'flex',
     flexDirection: 'column',
   },
   currentCard: {
+    shadowRadius: 10,
     height: HEIGHT / 2.7,
     width: WIDTH / 1.11,
     margin: 10,
-    elevation: 5,
-    borderTopRightRadius: 40,
-    borderBottomLeftRadius: 40,
     display: 'flex',
     flexDirection: 'row',
-    // borderWidth: 0.5,
-    backgroundColor: '#f4f4f9',
+    borderWidth: 0.35,
+    borderColor: '#91A1BD',
+    borderRadius: 10,
+    backgroundColor: '#DEE9FD',
   },
   cardImage: {
     width: '50%',
@@ -228,8 +233,8 @@ const styles = StyleSheet.create({
   },
   gameTitle: {
     fontSize: 22,
-    fontWeight: 'bold',
-    color: 'black',
+    fontFamily: 'OpenSans-Bold',
+    color: '#6C7A93',
   },
   claimButton: {
     display: 'flex',

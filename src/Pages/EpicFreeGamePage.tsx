@@ -19,7 +19,7 @@ const EpicFreeGamePage: React.FunctionComponent<EpicFreeGamePageProps> = (
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#d4e3ea",
+        backgroundColor: "#DEE9FD",
     },
 });
 export default EpicFreeGamePage;

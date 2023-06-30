@@ -62,8 +62,12 @@ function App(): JSX.Element {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
           animation: 'slide_from_right',
-          headerStyle: { backgroundColor: '#5EA2E5' },
-          headerTitleStyle: { color: 'white' },
+          headerStyle: { backgroundColor: '#DEE9FD' },
+          headerTitleStyle: { 
+            color: '#91A1BD',
+            fontSize: 26,
+            fontFamily: 'MW_Regular',
+          },
         }}>
           {hasData ? (
             <>
