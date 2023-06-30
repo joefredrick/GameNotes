@@ -22,6 +22,7 @@ type Props = {
 
 const GameInfoPageSection = (props: Props) => {
   const GameInfo = props.data.data;
+  console.log(GameInfo)
   let releaseDate = new Date(GameInfo.effectiveDate);
   console.log(props);
   const FinalDate = props.data.gameDate;
