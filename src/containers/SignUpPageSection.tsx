@@ -13,6 +13,8 @@ import app from '../config/firebase';
 import { Neomorph, Shadow } from "react-native-neomorph-shadows";
 
 import { getFirestore, doc, addDoc, setDoc, collection } from "firebase/firestore";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GetFCMToken } from '../utils/pushnotification_helper';
 
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
@@ -26,14 +28,31 @@ type Props = {
 
 const SignUpPageSection = (props: Props) => {
 
+  const getToken = async () => {
+    const fcmToken = await AsyncStorage.getItem('fcmtoken');
+    if(fcmToken == null){
+      const parsedToken = [];
+    }
+    else {  
+      const parsedToken = fcmToken;
+      setValue({ ...value, token: parsedToken });
+    }
+  }
+
+  useEffect(() => {
+    getToken();
+  }, [])
+
   const [value, setValue] = useState({
     displayname: '',
     email: '',
     password: '',
-    error: ''
+    error: '',
+    token: '',
   })
 
   async function signUp() {
+
     if (value.email === '' || value.password === '' || value.displayname === '') {
       setValue({
         ...value,
@@ -50,6 +69,7 @@ const SignUpPageSection = (props: Props) => {
         setDoc(doc(db, "users", userId), {
           UserName:  value.displayname,
           email: value.email,
+          FCM_Token: value.token,
         }
         )
         console.log("User Data Saved");
