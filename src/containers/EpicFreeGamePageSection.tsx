@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import {NaviRouteScreenNavigationProps} from '../types';
-import { Neomorph } from 'react-native-neomorph-shadows';
+import {Neomorph} from 'react-native-neomorph-shadows';
 
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
@@ -61,7 +61,15 @@ const EpicFreeGamePageSection = (props: Props) => {
                 ].promotions.promotionalOffers[0].promotionalOffers[0].endDate,
               );
               return (
-                <TouchableOpacity key={index} onPress={() => props.navigation.navigate('GameInfo', {data: item, upcoming: false, gameDate: endDate})}>
+                <TouchableOpacity
+                  key={index}
+                  onPress={() =>
+                    props.navigation.navigate('GameInfo', {
+                      data: item,
+                      upcoming: false,
+                      gameDate: endDate,
+                    })
+                  }>
                   <Neomorph style={styles.currentCard} key={index}>
                     <View style={styles.cardImage}>
                       <View
@@ -91,13 +99,28 @@ const EpicFreeGamePageSection = (props: Props) => {
                     </View>
                     <View style={styles.cardContent}>
                       <Text style={styles.gameTitle}>{item.title}</Text>
-                      <Text style={{fontSize: 16, color: '#6C7A93', fontFamily: 'OpenSans-Regular'}}>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          color: '#6C7A93',
+                          fontFamily: 'OpenSans-Regular',
+                        }}>
                         {item.offerType}
                       </Text>
-                      <Text style={{fontSize: 16, color: 'green', fontFamily: 'OpenSans-Bold'}}>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          color: 'green',
+                          fontFamily: 'OpenSans-Bold',
+                        }}>
                         {item.status}
                       </Text>
-                      <Text style={{fontSize: 16, color: '#6C7A93', fontFamily: 'OpenSans-Regular'}}>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          color: '#6C7A93',
+                          fontFamily: 'OpenSans-Regular',
+                        }}>
                         Free Until - {endDate.toDateString()}
                       </Text>
                       <View
@@ -115,18 +138,23 @@ const EpicFreeGamePageSection = (props: Props) => {
                             borderColor: '#91A1BD',
                             shadowRadius: 10,
                           }}>
-                          <Text style={{color: '#6C7A93',}}>-100%</Text>
+                          <Text style={{color: '#6C7A93'}}>-100%</Text>
                         </Neomorph>
                         <Text
                           style={{
                             textDecorationLine: 'line-through',
                             paddingLeft: 10,
-                            color: '#6C7A93', 
-                            fontFamily: 'OpenSans-Regular'
+                            color: '#6C7A93',
+                            fontFamily: 'OpenSans-Regular',
                           }}>
                           {'\u20B9'} {item.price.totalPrice.discount}
                         </Text>
-                        <Text style={{paddingLeft: 10, color: '#6C7A93', fontFamily: 'OpenSans-Regular'}}>
+                        <Text
+                          style={{
+                            paddingLeft: 10,
+                            color: '#6C7A93',
+                            fontFamily: 'OpenSans-Regular',
+                          }}>
                           {'\u20B9'} {item.price.totalPrice.discountPrice}
                         </Text>
                       </View>
@@ -149,7 +177,15 @@ const EpicFreeGamePageSection = (props: Props) => {
                 ].promotions.upcomingPromotionalOffers[0].promotionalOffers[0].endDate,
               );
               return (
-                <TouchableOpacity key={index} onPress={() => props.navigation.navigate('GameInfo', {data: item, upcoming: true,  gameDate: startDate})}>
+                <TouchableOpacity
+                  key={index}
+                  onPress={() =>
+                    props.navigation.navigate('GameInfo', {
+                      data: item,
+                      upcoming: true,
+                      gameDate: startDate,
+                    })
+                  }>
                   <Neomorph style={styles.currentCard} key={index}>
                     <View style={styles.cardImage}>
                       <View style={{height: '80%', width: '80%'}}>
@@ -161,10 +197,24 @@ const EpicFreeGamePageSection = (props: Props) => {
                     </View>
                     <View style={styles.cardContent}>
                       <Text style={styles.gameTitle}>{item.title}</Text>
-                      <Text style={{color: '#6C7A93',}}>{item.offerType}</Text>
-                      <Text style={{fontSize: 16, color: 'red', fontFamily: 'OpenSans-Bold'}}>{item.status}</Text>
-                      <Text style={{color: '#6C7A93', fontFamily: 'OpenSans-Bold', fontSize:16,}}>Coming Soon</Text>
-                      <Text style={{color: '#6C7A93',}}>
+                      <Text style={{color: '#6C7A93'}}>{item.offerType}</Text>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          color: 'red',
+                          fontFamily: 'OpenSans-Bold',
+                        }}>
+                        {item.status}
+                      </Text>
+                      <Text
+                        style={{
+                          color: '#6C7A93',
+                          fontFamily: 'OpenSans-Bold',
+                          fontSize: 16,
+                        }}>
+                        Coming Soon
+                      </Text>
+                      <Text style={{color: '#6C7A93'}}>
                         {startDate.toDateString()} - {endDate.toDateString()}
                       </Text>
                     </View>
@@ -172,7 +222,7 @@ const EpicFreeGamePageSection = (props: Props) => {
                 </TouchableOpacity>
               );
             })}
-            <View style={{paddingBottom:100,}}></View>
+          <View style={{paddingBottom: 100}}></View>
         </ScrollView>
       </SafeAreaView>
     </View>

@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {NaviRouteScreenNavigationProps} from '../types';
-import { Neomorph } from "react-native-neomorph-shadows";
+import {Neomorph} from 'react-native-neomorph-shadows';
 
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
@@ -22,7 +22,7 @@ type Props = {
 
 const GameInfoPageSection = (props: Props) => {
   const GameInfo = props.data.data;
-  console.log(GameInfo)
+  console.log(GameInfo);
   let releaseDate = new Date(GameInfo.effectiveDate);
   console.log(props);
   const FinalDate = props.data.gameDate;
@@ -36,7 +36,7 @@ const GameInfoPageSection = (props: Props) => {
       </View>
       <ScrollView style={styles.mainContainer}>
         <Text style={styles.title}>{GameInfo.title}</Text>
-        <View style={{alignSelf: 'center',}}>
+        <View style={{alignSelf: 'center'}}>
           <Neomorph style={styles.offerStyleBox}>
             <Text style={styles.offerStyle}>{GameInfo.offerType}</Text>
           </Neomorph>
@@ -106,10 +106,10 @@ const GameInfoPageSection = (props: Props) => {
           onPress={() => {
             Linking.openURL(GameInfo.RedeemLink);
           }}>
-            <View style={{alignItems: 'center'}}>
-              <Neomorph style={styles.redeemButton}>
+          <View style={{alignItems: 'center'}}>
+            <Neomorph style={styles.redeemButton}>
               <Text style={styles.redeemText}>Go To Page</Text>
-              </Neomorph>
+            </Neomorph>
           </View>
         </TouchableOpacity>
         <View
@@ -118,44 +118,108 @@ const GameInfoPageSection = (props: Props) => {
             margin: 10,
             justifyContent: 'space-between',
           }}>
-          <Text style={{fontSize: 16, color: '#91A1BD', fontFamily: 'OpenSans-Regular'}}>Developer</Text>
-          <Text style={{fontSize: 16, color: '#6C7A93', fontFamily: 'OpenSans-Regular'}}>
+          <Text
+            style={{
+              fontSize: 16,
+              color: '#91A1BD',
+              fontFamily: 'OpenSans-Regular',
+            }}>
+            Developer
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              color: '#6C7A93',
+              fontFamily: 'OpenSans-Regular',
+            }}>
             {GameInfo.customAttributes[1].value}
           </Text>
         </View>
-        <View style={{borderBottomWidth: 0.5, width: '100%', borderColor: '#91A1BD',}}></View>
+        <View
+          style={{
+            borderBottomWidth: 0.5,
+            width: '100%',
+            borderColor: '#91A1BD',
+          }}></View>
         <View
           style={{
             flexDirection: 'row',
             margin: 10,
             justifyContent: 'space-between',
           }}>
-          <Text style={{fontSize: 16, color: '#91A1BD', fontFamily: 'OpenSans-Regular'}}>Publisher</Text>
-          <Text style={{fontSize: 16, color: '#6C7A93', fontFamily: 'OpenSans-Regular'}}>
+          <Text
+            style={{
+              fontSize: 16,
+              color: '#91A1BD',
+              fontFamily: 'OpenSans-Regular',
+            }}>
+            Publisher
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              color: '#6C7A93',
+              fontFamily: 'OpenSans-Regular',
+            }}>
             {GameInfo.customAttributes[0].value}
           </Text>
         </View>
-        <View style={{borderBottomWidth: 0.5, width: '100%', borderColor: '#91A1BD',}}></View>
+        <View
+          style={{
+            borderBottomWidth: 0.5,
+            width: '100%',
+            borderColor: '#91A1BD',
+          }}></View>
         <View
           style={{
             flexDirection: 'row',
             margin: 10,
             justifyContent: 'space-between',
           }}>
-          <Text style={{fontSize: 16, color: '#91A1BD', fontFamily: 'OpenSans-Regular'}}>Release Date</Text>
-          <Text style={{fontSize: 16, color: '#6C7A93', fontFamily: 'OpenSans-Regular'}}>
+          <Text
+            style={{
+              fontSize: 16,
+              color: '#91A1BD',
+              fontFamily: 'OpenSans-Regular',
+            }}>
+            Release Date
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              color: '#6C7A93',
+              fontFamily: 'OpenSans-Regular',
+            }}>
             {releaseDate.toLocaleDateString()}
           </Text>
         </View>
-        <View style={{borderBottomWidth: 0.5, width: '100%', borderColor: '#91A1BD',}}></View>
+        <View
+          style={{
+            borderBottomWidth: 0.5,
+            width: '100%',
+            borderColor: '#91A1BD',
+          }}></View>
         <View
           style={{
             flexDirection: 'column',
             margin: 10,
             justifyContent: 'space-between',
           }}>
-          <Text style={{fontSize: 16, color: '#91A1BD', fontFamily: 'OpenSans-Regular'}}>Description</Text>
-          <Text style={{fontSize: 16, color: '#6C7A93', fontFamily: 'OpenSans-Regular', padding: 5}}>
+          <Text
+            style={{
+              fontSize: 16,
+              color: '#91A1BD',
+              fontFamily: 'OpenSans-Regular',
+            }}>
+            Description
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              color: '#6C7A93',
+              fontFamily: 'OpenSans-Regular',
+              padding: 5,
+            }}>
             {GameInfo.description}
           </Text>
         </View>

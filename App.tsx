@@ -1,10 +1,8 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React, { useEffect, useState, useContext } from 'react';
-import {
-  StyleSheet,
-} from 'react-native';
-import { RootStackParamList } from './src/types';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React, {useEffect, useState, useContext} from 'react';
+import {StyleSheet} from 'react-native';
+import {RootStackParamList} from './src/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import './src/config/firebase';
 import {
@@ -24,25 +22,24 @@ import DataContext from './src/store/dataContext';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
-  const [hasData, sethasData] = useState<Boolean>(false)
+  const [hasData, sethasData] = useState<Boolean>(false);
 
   const getData = async () => {
-    const value = await AsyncStorage.getItem('user')
+    const value = await AsyncStorage.getItem('user');
     if (value !== null) {
       console.log(value);
-      sethasData(true)
+      sethasData(true);
+    } else {
+      sethasData(false);
     }
-    else {
-      sethasData(false)
-    }
-  }
+  };
 
   useEffect(() => {
     getData();
     requestUserPermission();
     GetFCMToken();
     NotificationListner();
-  }, [])
+  }, []);
 
   //For React Context
   const authContext = React.useMemo(
@@ -52,47 +49,69 @@ function App(): JSX.Element {
       },
       signOut: () => {
         sethasData(false);
-      }
+      },
     }),
-    []
+    [],
   );
 
   return (
     <DataContext.Provider value={authContext}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{
-          animation: 'slide_from_right',
-          headerStyle: { backgroundColor: '#DEE9FD' },
-          headerTitleStyle: { 
-            color: '#91A1BD',
-            fontSize: 26,
-            fontFamily: 'MW_Regular',
-          },
-        }}>
+        <Stack.Navigator
+          screenOptions={{
+            animation: 'slide_from_right',
+            headerStyle: {backgroundColor: '#DEE9FD'},
+            headerTitleStyle: {
+              color: '#91A1BD',
+              fontSize: 26,
+              fontFamily: 'MW_Regular',
+            },
+          }}>
           {hasData ? (
             <>
-              <Stack.Screen name="TabScreen" component={BottomTabNavigation} options={{ headerShown: false }} />
-              <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+              <Stack.Screen
+                name="TabScreen"
+                component={BottomTabNavigation}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Home"
+                component={Home}
+                options={{headerShown: false}}
+              />
               <Stack.Screen name="FreeGame" component={FreeGamePage} />
               <Stack.Screen name="EpicGame" component={EpicFreeGamePage} />
-              <Stack.Screen name="GameInfo" component={GameInfoPage} options={{
-                headerStyle: { backgroundColor: '#DEE9FD' },
-                headerTitleStyle: { 
-                  color: '#91A1BD',
-                  fontSize: 26,
-                  fontFamily: 'MW_Regular',
-                },
-              }} /></>
+              <Stack.Screen
+                name="GameInfo"
+                component={GameInfoPage}
+                options={{
+                  headerStyle: {backgroundColor: '#DEE9FD'},
+                  headerTitleStyle: {
+                    color: '#91A1BD',
+                    fontSize: 26,
+                    fontFamily: 'MW_Regular',
+                  },
+                }}
+              />
+            </>
           ) : (
             <>
-              <Stack.Screen name="Login" component={LoginPage} options={{ headerShown: false }} />
-              <Stack.Screen name="Signup" component={SignUpPage} options={{ headerShown: false }} />
+              <Stack.Screen
+                name="Login"
+                component={LoginPage}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Signup"
+                component={SignUpPage}
+                options={{headerShown: false}}
+              />
             </>
           )}
         </Stack.Navigator>
       </NavigationContainer>
     </DataContext.Provider>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
