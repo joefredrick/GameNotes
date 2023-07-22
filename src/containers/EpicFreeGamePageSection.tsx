@@ -33,7 +33,7 @@ const EpicFreeGamePageSection = (props: Props) => {
     };
 
     fetch(
-      'https://gamenotes-b30b3-default-rtdb.firebaseio.com/FreeEpicGames/-NZAs_ml6MQO8TcHZ0fm/freeGames.json',
+      'https://gamenotes-b30b3-default-rtdb.firebaseio.com/FreeEpicGames/-N_we_CDCp44Dn77RW96/freeGames.json',
       options,
     )
       .then(response => response.json())
@@ -43,7 +43,7 @@ const EpicFreeGamePageSection = (props: Props) => {
       })
       .catch(err => console.error(err));
   };
-
+  
   useEffect(() => {
     FetchData();
   }, []);

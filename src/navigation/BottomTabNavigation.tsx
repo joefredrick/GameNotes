@@ -49,7 +49,7 @@ const BottomTabNavigation = () => {
                     tabBarIcon: ({color}) => <GameIcon fill={color} height={30} width={30}/>,
                 }} 
                 />
-            <Tab.Screen name="Profile" component={ProfilePage} 
+            <Tab.Screen name="Profile" component={DemoPage} 
                 options={{
                     headerStyle: {backgroundColor: '#f4f4f9'},
                     headerShown: false,
