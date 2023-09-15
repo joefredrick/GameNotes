@@ -33,7 +33,7 @@ const EpicFreeGamePageSection = (props: Props) => {
     };
 
     fetch(
-      'https://gamenotes-b30b3-default-rtdb.firebaseio.com/EpicFree/freeGames/-NdiiBmy64uiu18dFkCO/freeGames.json',
+      'https://gamenotes-b30b3-default-rtdb.firebaseio.com/EpicFree/freeGames/-NeMtgCIkLE8aV6EzFzC/freeGames.json',
       options,
     )
       .then(response => response.json())
