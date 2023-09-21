@@ -6,6 +6,7 @@ import { Neomorph, Shadow } from "react-native-neomorph-shadows";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DataContext from "../store/dataContext";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
+import storage from '@react-native-firebase/storage';
 
 import app from '../config/firebase';
 import { doc, getDoc, getFirestore } from "firebase/firestore";
@@ -111,6 +112,13 @@ const DemoPage = (props: Props) => {
     signOut();
   }
 
+  const uploadImage = async () => {
+    const reference = storage().ref(imageUri);
+    const pathToFile = imageUri;
+    // uploads file
+    await reference.putFile(pathToFile);
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.headerSection}>
@@ -164,6 +172,11 @@ const DemoPage = (props: Props) => {
               </Neomorph>
             </TouchableOpacity>
           </Neomorph>
+          <TouchableOpacity onPress={uploadImage}>
+            <Neomorph style={styles.signoutButton}>
+              <Text style={styles.signOutText}>Upload Image</Text>
+            </Neomorph>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
