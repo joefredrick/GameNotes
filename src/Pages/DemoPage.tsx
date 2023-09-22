@@ -30,6 +30,7 @@ const DemoPage = (props: Props) => {
   const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
   const [userID, setuserID] = useState("");
+  const [getImagefromCloud, setGetImageFromCloud] = useState();
 
   useEffect(() => {
     (async()=> {
@@ -113,10 +114,14 @@ const DemoPage = (props: Props) => {
   }
 
   const uploadImage = async () => {
-    const reference = storage().ref(imageUri);
+    const reference = storage().ref(`file:///data/user/com.gamenotes/${userID}`);
     const pathToFile = imageUri;
+    console.log(imageUri);
+    console.log(userID);
     // uploads file
     await reference.putFile(pathToFile);
+    const url = await storage().ref(`file:///data/user/com.gamenotes/${userID}`).getDownloadURL();
+    console.log(url);
   }
 
   return (
@@ -177,6 +182,10 @@ const DemoPage = (props: Props) => {
               <Text style={styles.signOutText}>Upload Image</Text>
             </Neomorph>
           </TouchableOpacity>
+          <Image 
+            source={{uri: `https://firebasestorage.googleapis.com/v0/b/gamenotes-b30b3.appspot.com/o/file%3A%2Fdata%2Fuser%2Fcom.gamenotes%2F${userID}?alt=media`}}
+            style={styles.img}
+          />
         </View>
       </View>
     </View>
