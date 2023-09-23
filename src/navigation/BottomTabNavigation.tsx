@@ -42,14 +42,14 @@ const BottomTabNavigation = () => {
                     tabBarIcon: ({color}) => <HomeIcon fill={color} height={25} width={25}/>,
                 }} 
                 />
-            <Tab.Screen name="FreeGames" component={FreeGamePage}
+            <Tab.Screen name="FreeGames" component={DemoPage}
                 options={{
                     headerStyle: {backgroundColor: '#f4f4f9'},
                     headerShown: false,
                     tabBarIcon: ({color}) => <GameIcon fill={color} height={30} width={30}/>,
                 }} 
                 />
-            <Tab.Screen name="Profile" component={DemoPage} 
+            <Tab.Screen name="Profile" component={ProfilePage} 
                 options={{
                     headerStyle: {backgroundColor: '#f4f4f9'},
                     headerShown: false,

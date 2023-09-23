@@ -30,7 +30,6 @@ const DemoPage = (props: Props) => {
   const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
   const [userID, setuserID] = useState("");
-  const [getImagefromCloud, setGetImageFromCloud] = useState();
 
   useEffect(() => {
     (async()=> {

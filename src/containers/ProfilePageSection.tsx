@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Button, StyleSheet, Dimensions, Image, Text, TouchableOpacity, ScrollView, TextInput } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NaviRouteScreenNavigationProps } from '../types';
 import DataContext from '../store/dataContext';
 import { Neomorph, Shadow } from 'react-native-neomorph-shadows';
+import EditIcon from '../assets/edit-profile.svg';
+
+import app from '../config/firebase';
+import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { useFocusEffect } from '@react-navigation/native';
+const db = getFirestore(app);
 
 type Props = {
   navigation: NaviRouteScreenNavigationProps<'Login'>;
@@ -14,204 +21,230 @@ const HEIGHT = Dimensions.get("window").height;
 
 export const ProfilePageSection = (props: Props) => {
 
-  const [user, setUser] = useState({ userName: "AdminName", age: "23", userEmail: "admin@gmail.com" })
-  const [edit, toggleEdit] = useState(false);
   const { signOut } = React.useContext(DataContext);
-
-  const toggle = () =>{
-    toggleEdit(state => !state)
-  }
+  const [userID, setuserID] = useState("");
+  const [userName, setUserName] = useState();
+  const [email, setEmail] = useState();
 
   const signedOut = async () => {
     await AsyncStorage.removeItem('user');
     signOut();
   }
+  
+  useEffect(() => {
+    (async()=> {
+        const value = await AsyncStorage.getItem('user')
+        if(value !== null){
+          console.log(value);
+          setuserID(value)
+        }
+        else{
+            const uid = getAuth(app).currentUser?.uid || "";
+            setuserID(uid)
+        }
+    })();
+    
+  }, [])
+
+  const getUserData:any = () => {
+      const docRef = doc(db, "users", userID);
+      getDoc(docRef).then((res) => {
+          const data = res.data()
+          const UserName = data?.["UserName"]
+          const UserEmail = data?.["email"]
+          setUserName(UserName)
+          setEmail(UserEmail)
+      });
+  }
+
+  if(userID){
+      getUserData()
+  }
+
+  // const loadImage = async () => {
+  //   try {
+  //     const res = await fetch(
+  //       `https://firebasestorage.googleapis.com/v0/b/gamenotes-b30b3.appspot.com/o/file%3A%2Fdata%2Fuser%2Fcom.gamenotes%2F${userID}?alt=media`
+  //     )
+  //     const data = await res.blob();
+  //     console.log(res.url);
+  //     setImageUrl(URL.createObjectURL(data));
+  //     console.log(imageUrl)
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     loadImage();
+  //   }, []),
+  // );
 
   return (
-    <ScrollView>
+    <View style={styles.container}>
+      <View style={styles.headerSection}>
+        <Text style={styles.headerText}>Profile</Text>
+      </View>
       <View style={styles.mainContainer}>
-      <Neomorph  style={styles.neomorph}>
-        <View style={styles.header}>
-          <Text style={styles.MainTitle}>PROFILE</Text>
-          <TouchableOpacity style={styles.btn} onPress={toggle}>
-            <Neomorph inner style={styles.neomorph6}>
-              <Image source={require("../assets/EditIcon.png")} style={styles.icn}></Image>
+        <View style={styles.profileCard}>
+          <View style={styles.profileImage}>
+            <Neomorph inner style={styles.profileImageOuter}>
+              <View style={styles.profileImageInner}>
+                <Image 
+                  source={{uri: `https://firebasestorage.googleapis.com/v0/b/gamenotes-b30b3.appspot.com/o/file%3A%2Fdata%2Fuser%2Fcom.gamenotes%2F${userID}?alt=media`}}
+                  style={styles.img}
+                />
+              </View>
             </Neomorph>
-          </TouchableOpacity>
-        </View>
-      </Neomorph>
-      <Shadow useArt style={styles.shadow1}>
-        <View style={styles.contain}>
-          <View style={styles.photo}>
-            <Neomorph inner style={styles.neomorph7}>
-              <Neomorph style={styles.neomorph8}>
-                <Image source={require("../assets/UserDefault.png")} style={styles.img}></Image>
-              </Neomorph>
+            <View style={styles.buttonArea}>
+              <TouchableOpacity>
+                <Neomorph style={styles.editButton}>
+                  <EditIcon fill={'#91A1BD'} height={25} width={25}/>
+                </Neomorph>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.detailsSection}>
+            <Neomorph style={styles.detailsCard}>
+              <Text style={styles.usenameText}>{userName}</Text>
+              <Text style={styles.emailText}>{email}</Text>
+              <TouchableOpacity onPress={signedOut}>
+                <Neomorph style={styles.signoutButton}>
+                  <Text style={styles.signOutText}>Sign Out</Text>
+                </Neomorph>
+              </TouchableOpacity>
             </Neomorph>
           </View>
-          <View>
-              <View style={styles.detailContainer}>
-                <Neomorph inner style={styles.neomorph5}>
-                  <Text style={styles.title}>User Name: </Text>
-                  <TextInput style={edit? styles.ansEdit: styles.ansNonEdit} placeholder={"Username"} value={user.userName} editable={edit}
-                    onChangeText={(text)=>{setUser({...user, userName: text})}}/>
-                </Neomorph>
-              </View>
-
-              <View style={styles.detailContainer}>
-                <Neomorph inner style={styles.neomorph5}>
-                  <Text style={styles.title}>Age </Text>
-                  <TextInput style={edit? styles.ansEdit: styles.ansNonEdit} placeholder={"Age"} value={user.age} editable={edit}
-                    onChangeText={(text)=>{setUser({...user, age: text})}}/>
-                </Neomorph>
-              </View>
-
-              <View style={styles.detailContainer}>
-                <Neomorph inner style={styles.neomorph5}>
-                  <Text style={styles.title}>User Email: </Text>
-                  <Text style={styles.ansNonEdit}>{user.userEmail}</Text>
-                </Neomorph>
-              </View>
-
-              <View style={styles.button}>
-                <Button title='SignOut' onPress={signedOut} />
-              </View>
-          </View>
         </View>
-      </Shadow>
+      </View>
     </View>
-    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    margin: 10,
-    padding: 15,
-    height: "88%",
-    justifyContent: 'center',
-    alignItems: 'center'
+  container: {
+    backgroundColor: "#DEE9FD",
+    height: HEIGHT,
+    width: WIDTH,
+    alignItems: 'center',
   },
-  header: {
-    display: "flex",
+  headerSection: {
+    width: '100%',
+    height: '10%',
     flexDirection: 'row',
-    justifyContent: "center",
-    paddingTop:5
+    justifyContent: 'center',
+    backgroundColor: '#DEE9FD',
   },
-  btn: {
-    height: 35,
-    width: 35,
-    margin: 5,
+  headerText: {
+    color: '#91A1BD',
+    marginTop: 20,
+    fontSize: 26,
+    fontFamily: 'MW_Regular',
   },
-  MainTitle: {
-    fontSize: 32,
-    fontWeight: "bold",
-    margin: 6,
-  },
-  ans: {
-    textAlign: "center",
-  },
-  ansEdit:{
-    textDecorationLine: "underline",
-    color: "black",
-    fontStyle:"italic",
-    textAlign: 'center',
-    padding: 0
-  },
-  ansNonEdit:{
-    fontStyle: "normal",
-    textAlign: 'center',
-    fontSize: 14,
-    color:"grey",
-    padding: 0
-  },
-  contain: {
+  mainContainer: {
+    height: '90%',
+    width: WIDTH,
     alignItems: 'center',
-    margin: 10,
   },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
+  profileCard: {
+    width: WIDTH,
+    alignItems: 'center',
   },
-
-  img: {
-    height: 140,
-    width: 140,
+  profileImage: {
+    // paddingLeft: '15%',
   },
-  icn: {
-    height: 25,
-    width: 25,
-    alignSelf: "center",
-  },
-  detailContainer: {
-    alignItems: "center",
-    padding: 10,
-    margin: 10,
-  },
-  shadow1: {
-    borderRadius: 20,
-    shadowOpacity: 0.25,
-    shadowColor: 'black',
-    shadowRadius: 20,
-    backgroundColor: '#d4e3ea',
-    width: WIDTH / 1.14,
-    height: HEIGHT / 1.25,
-  },
-  button: {
-    width: 100,
-    height: 100,
-    alignSelf: "center",
-    justifyContent: "center"
-  },
-  neomorph: {
-    borderRadius: 20,
-    shadowRadius: 8,
-    backgroundColor: '#d4e3ea',
-    width: WIDTH/1.19,
-    height: 70,
-    margin:25,
-  },
-  neomorph4: {
-    borderRadius: 20,
-    shadowRadius: 8,
-    backgroundColor: '#d4e3ea',
-    width: 300,
-    height: HEIGHT / 1.25 - 250,
-  },
-  neomorph5: {
-    borderRadius: 20,
-    shadowRadius: 8,
-    backgroundColor: '#d4e3ea',
-    width: 220,
-    height: 60,
-  },
-  neomorph6: {
-    borderRadius: 20,
-    shadowRadius: 8,
-    backgroundColor: '#d4e3ea',
-    height: 45,
-    width: 45,
-    paddingTop: 10,
-  },
-  photo: {
-    height: 220,
-  },
-  neomorph7: {
+  profileImageOuter: {
     borderRadius: 100,
-    shadowRadius: 12,
-    backgroundColor: '#d4e3ea',
-    width: 200,
-    height: 200,
+    shadowRadius: 4,
+    backgroundColor: '#DEE9FD',
+    width: 150,
+    height: 150,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  neomorph8: {
-    borderRadius: 70,
-    shadowRadius: 12,
-    backgroundColor: '#d4e3ea',
-    width: 140,
-    height: 140,
+  profileImageInner: {
+    backgroundColor: '#DEE9FD',
+    height: 120,
+    width: 120,
+    borderRadius: 100,
+    borderWidth: 5,
+    borderColor: '#CCDEFA',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  img: {
+    height: 110,
+    width: 110,
+    borderRadius: 100,
+  },
+  buttonArea: {
+    position: 'absolute',
+    marginTop: '20%',
+    alignItems: 'center',
+    marginLeft: '45%',
+  },
+  editButton: {
+    height: 50,
+    width: 50,
+    shadowRadius: 10,
+    backgroundColor: '#DEE9FD',
+    borderRadius: 100,
+    borderWidth: 0.35,
+    borderColor: '#91A1BD',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  detailsSection: {
+    height: HEIGHT / 2.1,
+    width: WIDTH,
+    display: 'flex',
+    alignItems: 'center',
+    position: 'absolute',
+    zIndex: -1,
+    paddingTop: '20%',
+  },
+  detailsCard: {
+    shadowRadius: 10,
+    display: 'flex',
+    marginTop: 15,
+    backgroundColor: '#DEE9FD',
+    height: HEIGHT / 2.5,
+    width: WIDTH / 1.2,
+    borderRadius: 10,
+    borderWidth: 0.35,
+    borderColor: '#91A1BD',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
+  usenameText: {
+    fontSize: 22,
+    color: '#6C7A93',
+    fontFamily: 'OpenSans-Bold',
+    marginTop: 80,
+  },
+  emailText: {
+    fontSize: 16,
+    color: '#6C7A93',
+    fontFamily: 'OpenSans-Regular',
+    marginTop: 20,
+  },
+  signoutButton: {
+    height: 40,
+    width: 150,
+    shadowRadius: 10,
+    marginTop: 20,
+    backgroundColor: '#DEE9FD',
+    borderRadius: 10,
+    borderWidth: 0.35,
+    borderColor: '#91A1BD',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  signOutText: {
+    fontSize: 18,
+    color: '#6C7A93',
+    fontFamily: 'OpenSans-SemiBold'
   },
 })
 
