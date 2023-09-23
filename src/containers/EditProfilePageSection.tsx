@@ -7,13 +7,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import DataContext from "../store/dataContext";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import storage from '@react-native-firebase/storage';
+import EditPenIcon from '../assets/edit-pen.svg';
 
 import app from '../config/firebase';
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { doc, getDoc, setDoc, getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 const db = getFirestore(app);
+
 type props = {
-    navigation: NaviRouteScreenNavigationProps<'Login'>;
+    navigation: NaviRouteScreenNavigationProps<'Home'>;
+    data: any;
 };
 
 const WIDTH = Dimensions.get("window").width;
@@ -21,13 +24,13 @@ const HEIGHT = Dimensions.get("window").height;
 
 const EditProfilePageSection = (props: props) => {
 
-const { signOut } = React.useContext(DataContext);
-const [imageUri, setImageUri] = useState('');
+const [imageUri, setImageUri] = useState(undefined);
 const [defaultImage, setDefaultImage] = useState(false);
 const [openModal, setOpenModal] = useState(false);
 const [userName, setUserName] = useState();
 const [email, setEmail] = useState();
 const [userID, setuserID] = useState("");
+const [userVal, setUserVal] = useState({});
 
 useEffect(() => {
   (async()=> {
@@ -44,7 +47,7 @@ useEffect(() => {
   
 }, [])
 
-const getUserData:any = () => {
+  const getUserData:any = () => {
     const docRef = doc(db, "users", userID);
     getDoc(docRef).then((res) => {
         const data = res.data()
@@ -52,12 +55,24 @@ const getUserData:any = () => {
         const UserEmail = data?.["email"]
         setUserName(UserName)
         setEmail(UserEmail)
+        setUserVal({...userVal,
+          UserName: data?.["UserName"],
+          email: data?.["email"],
+          FCM_Token: data?.["FCM_Token"],
+          imageUrl: data?.["imageUrl"]
+        })
+        if(data?.["imageUrl"]){
+          setDefaultImage(true);
+          setImageUri(data?.["imageUrl"])
+        }
     });
-}
+  }
 
-if(userID){
+  useEffect(()=>{
+  if(userID){
     getUserData()
-}
+  }
+  },[userID])
 
 const openCamera = () => {
   let options = {
@@ -105,84 +120,91 @@ const openGallery = () => {
   });
 };
 
-const signedOut = async () => {
-  await AsyncStorage.removeItem('user');
-  signOut();
-}
-
-const uploadImage = async () => {
-  const reference = storage().ref(`file:///data/user/com.gamenotes/${userID}`);
+const updateProfile = async () => {
+  const DateStamp = Date.now()
+  const reference = storage().ref(`file:///data/user/com.gamenotes/${userID}/${DateStamp}`);
+  let imgurl = `https://firebasestorage.googleapis.com/v0/b/gamenotes-b30b3.appspot.com/o/file%3A%2Fdata%2Fuser%2Fcom.gamenotes%2F${userID}%2F${DateStamp}?alt=media`
   const pathToFile = imageUri;
   console.log(imageUri);
-  console.log(userID);
+  const userval = {...userVal, imageUrl: imgurl}
   // uploads file
+  setUserVal(userval);
+  setDoc(doc(db, "users", userID), userval);
   await reference.putFile(pathToFile);
-  const url = await storage().ref(`file:///data/user/com.gamenotes/${userID}`).getDownloadURL();
+  const url = await storage().ref(`file:///data/user/com.gamenotes/${userID}/${DateStamp}`).getDownloadURL();
   console.log(url);
+  props.data.update(imgurl);
+  props.navigation.navigate('TabScreen')
 }
 
 return (
   <View style={styles.container}>
-    <View style={styles.headerSection}>
-      <Text style={styles.headerText}>Profile</Text>
-    </View>
     <View style={styles.mainContainer}>
-      <Neomorph style={styles.profileImage}>
-        <TouchableOpacity onPress={() => setOpenModal(true)}>
-          <Image 
-            source={ 
-              defaultImage === false 
-                ? require("../assets/UserDefault.png") 
-                : {uri: imageUri}
-            } 
-            style={styles.img}/>
-            <Modal
-              visible={openModal}
-              animationType="slide"
-              transparent={true}
-              onRequestClose={() => setOpenModal(false)}>
-              <View style={styles.modalBackground}>
-                <View style={styles.modalContainer}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      openCamera();
-                    }}>
-                    <Text style={styles.modalText}>
-                      Take Photo
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => {
-                      openGallery();
-                    }}>
-                    <Text style={styles.modalText}>
-                      Choose Photo from Library
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+      <View style={styles.profileCard}>
+        <View style={styles.profileImage}>
+          <TouchableOpacity onPress={() => setOpenModal(true)}>
+            <Neomorph inner style={styles.profileImageOuter}>
+              <View style={styles.profileImageInner}>
+              <Image 
+                source={ 
+                  defaultImage === false 
+                    ? require("../assets/UserDefault.png") 
+                    : {uri: imageUri}
+                } 
+                style={styles.img}
+              />
               </View>
-            </Modal>
-        </TouchableOpacity>
-      </Neomorph>
+            </Neomorph>
+              <Neomorph style={styles.editButton}>
+                <EditPenIcon fill={'#91A1BD'} height={25} width={25}/>
+              </Neomorph>
+              <Modal
+                visible={openModal}
+                animationType="slide"
+                transparent={true}
+                onRequestClose={() => setOpenModal(false)}>
+                <View style={styles.modalBackground}>
+                  <View style={styles.modalContainer}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        openCamera();
+                      }}>
+                      <Text style={styles.modalText}>
+                        Take Photo
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => {
+                        openGallery();
+                      }}>
+                      <Text style={styles.modalText}>
+                        Choose Photo from Library
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </Modal>
+          </TouchableOpacity>
+        </View>
+      </View>
       <View style={styles.detailsSection}>
         <Neomorph style={styles.detailsCard}>
-          <Text style={styles.usenameText}>{userName}</Text>
+          <Shadow
+            inner
+            style={styles.input}
+          >
+            <TextInput 
+              placeholder={userName} />
+              
+          </Shadow>
+          {/* <Text style={styles.usernameText}>{userName}</Text> */}
           <Text style={styles.emailText}>{email}</Text>
-          <TouchableOpacity onPress={signedOut}>
+          <TouchableOpacity onPress={updateProfile}>
             <Neomorph style={styles.signoutButton}>
-              <Text style={styles.signOutText}>Sign Out</Text>
+              <Text style={styles.signOutText}>Update Profile</Text>
             </Neomorph>
           </TouchableOpacity>
         </Neomorph>
-        <TouchableOpacity onPress={uploadImage}>
-          <Neomorph style={styles.signoutButton}>
-            <Text style={styles.signOutText}>Upload Image</Text>
-          </Neomorph>
-        </TouchableOpacity>
-        <Image 
-          source={{uri: `https://firebasestorage.googleapis.com/v0/b/gamenotes-b30b3.appspot.com/o/file%3A%2Fdata%2Fuser%2Fcom.gamenotes%2F${userID}?alt=media`}}
-          style={styles.img}
-        />
       </View>
     </View>
   </View>
@@ -196,30 +218,31 @@ container: {
   width: WIDTH,
   alignItems: 'center',
 },
-headerSection: {
-  width: '100%',
-  height: '10%',
-  flexDirection: 'row',
-  justifyContent: 'center',
-  backgroundColor: '#DEE9FD',
-},
-headerText: {
-  color: '#91A1BD',
-  marginTop: 20,
-  fontSize: 26,
-  fontFamily: 'MW_Regular',
-},
 mainContainer: {
-  height: '90%',
+  height: '100%',
+  width: WIDTH,
+  alignItems: 'center',
+},
+profileCard: {
   width: WIDTH,
   alignItems: 'center',
 },
 profileImage: {
-  shadowRadius: 10,
-  display: 'flex',
+  marginTop: 15,
+},
+profileImageOuter: {
+  borderRadius: 100,
+  shadowRadius: 4,
   backgroundColor: '#DEE9FD',
-  height: 150,
-  width: 150,
+  width: 130,
+  height: 130,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+profileImageInner: {
+  backgroundColor: '#DEE9FD',
+  height: 100,
+  width: 100,
   borderRadius: 100,
   borderWidth: 5,
   borderColor: '#CCDEFA',
@@ -227,22 +250,39 @@ profileImage: {
   justifyContent: 'center',
 },
 img: {
-  height: 130,
-  width: 130,
+  height: 110,
+  width: 110,
   borderRadius: 100,
+},
+editButton: {
+  height: 40,
+  width: 40,
+  shadowRadius: 10,
+  backgroundColor: '#DEE9FD',
+  borderRadius: 100,
+  borderWidth: 0.35,
+  borderColor: '#91A1BD',
+  justifyContent: 'center',
+  alignItems: 'center',
+  position: 'absolute',
+  marginTop: '60%',
+  marginLeft: '83%',
 },
 detailsSection: {
   height: HEIGHT / 2.1,
   width: WIDTH,
   display: 'flex',
   alignItems: 'center',
+  position: 'absolute',
+  zIndex: -1,
+  paddingTop: '20%',
 },
 detailsCard: {
   shadowRadius: 10,
   display: 'flex',
   marginTop: 15,
   backgroundColor: '#DEE9FD',
-  height: HEIGHT / 3.5,
+  height: HEIGHT / 2.5,
   width: WIDTH / 1.2,
   borderRadius: 10,
   borderWidth: 0.35,
@@ -250,7 +290,20 @@ detailsCard: {
   alignItems: 'center',
   flexDirection: 'column',
 },
-usenameText: {
+input: {
+  shadowOffset: { width: 2, height: 2 },
+  shadowOpacity: 0.8,
+  shadowColor: '#91A1BD',
+  shadowRadius: 10,
+  borderRadius: 5,
+  backgroundColor: '#DEE9FD',
+  width: 265,
+  height: 40,
+  marginTop: 80,
+  justifyContent: 'center',
+  paddingLeft: 20,
+},
+usernameText: {
   fontSize: 22,
   color: '#6C7A93',
   fontFamily: 'OpenSans-Bold',

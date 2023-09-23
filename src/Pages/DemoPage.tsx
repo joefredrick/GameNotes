@@ -51,10 +51,8 @@ const DemoPage = (props: Props) => {
       const docRef = doc(db, "users", userID);
       getDoc(docRef).then((res) => {
           const data = res.data()
-          const UserName = data?.["UserName"]
-          const UserEmail = data?.["email"]
-          setUserName(UserName)
-          setEmail(UserEmail)
+          setUserName(data?.["UserName"])
+          setEmail(data?.["email"])
           setUserVal({...userVal,
             UserName: data?.["UserName"],
             email: data?.["email"],

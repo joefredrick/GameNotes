@@ -5,12 +5,16 @@ import EditProfilePageSection from "../containers/EditProfilePageSection";
 
 interface EditProfilePageProps {
     navigation: NaviRouteScreenNavigationProps<'Home'>;
+    route: any;
 }
 
-const EditProfilePage:React.FunctionComponent<EditProfilePageProps>  = ({navigation}) => {
+const EditProfilePage:React.FunctionComponent<EditProfilePageProps>  = props => {
     return(
         <View style={styles.container}>
-            <EditProfilePageSection navigation={navigation}/>
+            <EditProfilePageSection 
+                navigation={props.navigation}
+                data={props.route.params}
+            />
         </View>
     )
 }

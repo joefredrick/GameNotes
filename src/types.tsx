@@ -16,6 +16,7 @@ export type RootStackParamList = {
     GameInfo: undefined;
     EpicGame: undefined;
     App: undefined;
+    EditProfile: undefined;
   };
 
 export type LoginStackParamList = {

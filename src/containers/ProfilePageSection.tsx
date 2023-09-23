@@ -25,6 +25,8 @@ export const ProfilePageSection = (props: Props) => {
   const [userID, setuserID] = useState("");
   const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
+  const [imageUrl, setImageUrl] = useState(undefined);
+  const [hasImage, setHasImage] = useState(false);
 
   const signedOut = async () => {
     await AsyncStorage.removeItem('user');
@@ -50,36 +52,28 @@ export const ProfilePageSection = (props: Props) => {
       const docRef = doc(db, "users", userID);
       getDoc(docRef).then((res) => {
           const data = res.data()
-          const UserName = data?.["UserName"]
-          const UserEmail = data?.["email"]
-          setUserName(UserName)
-          setEmail(UserEmail)
+          setUserName(data?.["UserName"])
+          setEmail(data?.["email"])
+          if(data?.["imageUrl"]){
+            setHasImage(true);
+            setImageUrl(data?.["imageUrl"])
+          }
+          console.log("URL:",imageUrl)
       });
+      
   }
 
-  if(userID){
+  useEffect(()=>{
+    if(userID){
       getUserData()
   }
+  },[userID])
 
-  // const loadImage = async () => {
-  //   try {
-  //     const res = await fetch(
-  //       `https://firebasestorage.googleapis.com/v0/b/gamenotes-b30b3.appspot.com/o/file%3A%2Fdata%2Fuser%2Fcom.gamenotes%2F${userID}?alt=media`
-  //     )
-  //     const data = await res.blob();
-  //     console.log(res.url);
-  //     setImageUrl(URL.createObjectURL(data));
-  //     console.log(imageUrl)
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     loadImage();
-  //   }, []),
-  // );
+  const profileImageUpdate = (imageurl: any) => {
+    setImageUrl(imageurl);
+    setHasImage(true);
+    console.log("image received", imageurl);
+  }
 
   return (
     <View style={styles.container}>
@@ -92,13 +86,20 @@ export const ProfilePageSection = (props: Props) => {
             <Neomorph inner style={styles.profileImageOuter}>
               <View style={styles.profileImageInner}>
                 <Image 
-                  source={{uri: `https://firebasestorage.googleapis.com/v0/b/gamenotes-b30b3.appspot.com/o/file%3A%2Fdata%2Fuser%2Fcom.gamenotes%2F${userID}?alt=media`}}
+                  source={
+                    hasImage === false
+                    ? require("../assets/UserDefault.png") 
+                    : {uri: imageUrl}}
                   style={styles.img}
                 />
               </View>
             </Neomorph>
             <View style={styles.buttonArea}>
-              <TouchableOpacity>
+              <TouchableOpacity 
+                onPress={() => 
+                  {props.navigation.navigate('EditProfile',{
+                    update: profileImageUpdate,
+                  })}}>
                 <Neomorph style={styles.editButton}>
                   <EditIcon fill={'#91A1BD'} height={25} width={25}/>
                 </Neomorph>
@@ -107,7 +108,7 @@ export const ProfilePageSection = (props: Props) => {
           </View>
           <View style={styles.detailsSection}>
             <Neomorph style={styles.detailsCard}>
-              <Text style={styles.usenameText}>{userName}</Text>
+              <Text style={styles.usernameText}>{userName}</Text>
               <Text style={styles.emailText}>{email}</Text>
               <TouchableOpacity onPress={signedOut}>
                 <Neomorph style={styles.signoutButton}>
@@ -217,7 +218,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
   },
-  usenameText: {
+  usernameText: {
     fontSize: 22,
     color: '#6C7A93',
     fontFamily: 'OpenSans-Bold',

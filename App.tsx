@@ -18,6 +18,7 @@ import GameInfoPage from './src/Pages/GameInfoPage';
 import LoginPage from './src/Pages/LoginPage';
 import SignUpPage from './src/Pages/SignUpPage';
 import DataContext from './src/store/dataContext';
+import EditProfilePage from './src/Pages/EditProfilePage';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -84,6 +85,18 @@ function App(): JSX.Element {
               <Stack.Screen
                 name="GameInfo"
                 component={GameInfoPage}
+                options={{
+                  headerStyle: {backgroundColor: '#DEE9FD'},
+                  headerTitleStyle: {
+                    color: '#91A1BD',
+                    fontSize: 26,
+                    fontFamily: 'MW_Regular',
+                  },
+                }}
+              />
+              <Stack.Screen 
+                name="EditProfile" 
+                component={EditProfilePage} 
                 options={{
                   headerStyle: {backgroundColor: '#DEE9FD'},
                   headerTitleStyle: {
