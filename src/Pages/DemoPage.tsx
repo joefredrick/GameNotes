@@ -9,7 +9,7 @@ import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import storage from '@react-native-firebase/storage';
 
 import app from '../config/firebase';
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { doc, getDoc, setDoc, getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 const db = getFirestore(app);
 
@@ -30,6 +30,7 @@ const DemoPage = (props: Props) => {
   const [userName, setUserName] = useState();
   const [email, setEmail] = useState();
   const [userID, setuserID] = useState("");
+  const [userVal, setUserVal] = useState({})
 
   useEffect(() => {
     (async()=> {
@@ -54,12 +55,24 @@ const DemoPage = (props: Props) => {
           const UserEmail = data?.["email"]
           setUserName(UserName)
           setEmail(UserEmail)
+          setUserVal({...userVal,
+            UserName: data?.["UserName"],
+            email: data?.["email"],
+            FCM_Token: data?.["FCM_Token"],
+            imageUrl: data?.["imageUrl"]
+          })
+          if(data?.["imageUrl"]){
+            setDefaultImage(true);
+            setImageUri(data?.["imageUrl"])
+          }
       });
   }
 
-  if(userID){
+  useEffect(()=>{
+    if(userID){
       getUserData()
   }
+  },[userID])
   
   const openCamera = () => {
     let options = {
@@ -113,13 +126,18 @@ const DemoPage = (props: Props) => {
   }
 
   const uploadImage = async () => {
-    const reference = storage().ref(`file:///data/user/com.gamenotes/${userID}`);
+    const DateStamp = Date.now()
+    const reference = storage().ref(`file:///data/user/com.gamenotes/${userID}/${DateStamp}`);
+    let imgurl = `https://firebasestorage.googleapis.com/v0/b/gamenotes-b30b3.appspot.com/o/file%3A%2Fdata%2Fuser%2Fcom.gamenotes%2F${userID}%2F${DateStamp}?alt=media`
     const pathToFile = imageUri;
     console.log(imageUri);
     console.log(userID);
+    const userval = {...userVal, imageUrl: imgurl}
     // uploads file
+    setUserVal(userval);
+    setDoc(doc(db, "users", userID), userval);
     await reference.putFile(pathToFile);
-    const url = await storage().ref(`file:///data/user/com.gamenotes/${userID}`).getDownloadURL();
+    const url = await storage().ref(`file:///data/user/com.gamenotes/${userID}/${DateStamp}`).getDownloadURL();
     console.log(url);
   }
 
@@ -182,7 +200,7 @@ const DemoPage = (props: Props) => {
             </Neomorph>
           </TouchableOpacity>
           <Image 
-            source={{uri: `https://firebasestorage.googleapis.com/v0/b/gamenotes-b30b3.appspot.com/o/file%3A%2Fdata%2Fuser%2Fcom.gamenotes%2F${userID}?alt=media`}}
+            source={{uri: userVal?.["imageUrl"]}}
             style={styles.img}
           />
         </View>
