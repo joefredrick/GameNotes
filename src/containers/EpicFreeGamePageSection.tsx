@@ -33,7 +33,7 @@ const EpicFreeGamePageSection = (props: Props) => {
     };
 
     fetch(
-      'https://gamenotes-b30b3-default-rtdb.firebaseio.com/EpicFree/freeGames/-NeMtgCIkLE8aV6EzFzC/freeGames.json',
+      'https://gamenotes-b30b3-default-rtdb.firebaseio.com/freeGames/Epic.json',
       options,
     )
       .then(response => response.json())
@@ -58,7 +58,7 @@ const EpicFreeGamePageSection = (props: Props) => {
               let endDate = new Date(
                 currentData[
                   index
-                ].promotions.promotionalOffers[0].promotionalOffers[0].endDate,
+                ].endDate,
               );
               return (
                 <TouchableOpacity
@@ -81,7 +81,7 @@ const EpicFreeGamePageSection = (props: Props) => {
                           backgroundColor: '#0078f2',
                         }}>
                         <Image
-                          source={{uri: item.keyImages[1].url}}
+                          source={{uri: item.Thumbnail}}
                           style={styles.currentImageStyle}
                         />
                         <Text
@@ -147,7 +147,7 @@ const EpicFreeGamePageSection = (props: Props) => {
                             color: '#6C7A93',
                             fontFamily: 'OpenSans-Regular',
                           }}>
-                          {'\u20B9'} {item.price.totalPrice.discount}
+                          {'\u20B9'} {item.originalPrice}
                         </Text>
                         <Text
                           style={{
@@ -155,7 +155,7 @@ const EpicFreeGamePageSection = (props: Props) => {
                             color: '#6C7A93',
                             fontFamily: 'OpenSans-Regular',
                           }}>
-                          {'\u20B9'} {item.price.totalPrice.discountPrice}
+                          {'\u20B9'} {item.discountPrice}
                         </Text>
                       </View>
                     </View>
@@ -169,12 +169,12 @@ const EpicFreeGamePageSection = (props: Props) => {
               let startDate = new Date(
                 upcomingData[
                   index
-                ].promotions.upcomingPromotionalOffers[0].promotionalOffers[0].startDate,
+                ].startDate,
               );
               let endDate = new Date(
                 upcomingData[
                   index
-                ].promotions.upcomingPromotionalOffers[0].promotionalOffers[0].endDate,
+                ].endDate,
               );
               return (
                 <TouchableOpacity
@@ -190,14 +190,14 @@ const EpicFreeGamePageSection = (props: Props) => {
                     <View style={styles.cardImage}>
                       <View style={{height: '80%', width: '80%'}}>
                         <Image
-                          source={{uri: item.keyImages[0].url}}
+                          source={{uri: item.Thumbnail}}
                           style={styles.imageStyle}
                         />
                       </View>
                     </View>
                     <View style={styles.cardContent}>
                       <Text style={styles.gameTitle}>{item.title}</Text>
-                      <Text style={{color: '#6C7A93'}}>{item.offerType}</Text>
+                      {/* <Text style={{color: '#6C7A93'}}>{item.offerType}</Text> */}
                       <Text
                         style={{
                           fontSize: 16,

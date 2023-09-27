@@ -31,7 +31,7 @@ const GameInfoPageSection = (props: Props) => {
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <View style={styles.card}>
-          <Image source={{uri: GameInfo.keyImages[0].url}} style={styles.img} />
+          <Image source={{uri: GameInfo.OfferImageWide}} style={styles.img} />
         </View>
       </View>
       <ScrollView style={styles.mainContainer}>
@@ -72,10 +72,10 @@ const GameInfoPageSection = (props: Props) => {
                 paddingLeft: 10,
                 color: '#6C7A93',
               }}>
-              {'\u20B9'} {GameInfo.price.totalPrice.discount}
+              {'\u20B9'} {GameInfo.originalPrice}
             </Text>
             <Text style={{paddingLeft: 10, color: '#6C7A93'}}>
-              {'\u20B9'} {GameInfo.price.totalPrice.discountPrice}
+              {'\u20B9'} {GameInfo.discountPrice}
             </Text>
           </View>
         )}
@@ -132,7 +132,7 @@ const GameInfoPageSection = (props: Props) => {
               color: '#6C7A93',
               fontFamily: 'OpenSans-Regular',
             }}>
-            {GameInfo.customAttributes[1].value}
+            {GameInfo.Developer}
           </Text>
         </View>
         <View
@@ -161,7 +161,7 @@ const GameInfoPageSection = (props: Props) => {
               color: '#6C7A93',
               fontFamily: 'OpenSans-Regular',
             }}>
-            {GameInfo.customAttributes[0].value}
+            {GameInfo.Publisher}
           </Text>
         </View>
         <View
